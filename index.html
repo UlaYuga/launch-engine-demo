@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Launch Engine Demo</title>
-    <meta name="description" content="Публичное кликабельное демо Launch Engine: панель запуска продуктов без backend, ключей и внешних API." />
+    <meta name="description" content="Кликабельное демо Launch Engine — реальный AI, без backend-секретов." />
     <style>
       :root {
         color-scheme: dark;
@@ -17,21 +17,19 @@
         --text: #e2ecff;
         --muted: #7a8fa8;
         --soft: #48586a;
-        --line: rgba(180, 210, 255, 0.07);
-        --line-strong: rgba(180, 210, 255, 0.13);
+        --line: rgba(180,210,255,0.07);
+        --line-strong: rgba(180,210,255,0.13);
         --accent: #ff7a1a;
-        --accent-glow: rgba(255, 122, 26, 0.22);
+        --accent-glow: rgba(255,122,26,0.22);
         --blue: #5ba3f5;
-        --blue-dim: rgba(91, 163, 245, 0.11);
-        --blue-glow: rgba(91, 163, 245, 0.18);
+        --blue-dim: rgba(91,163,245,0.11);
         --green: #3dd68c;
-        --green-dim: rgba(61, 214, 140, 0.11);
+        --green-dim: rgba(61,214,140,0.11);
         --amber: #f5b731;
-        --amber-dim: rgba(245, 183, 49, 0.11);
+        --amber-dim: rgba(245,183,49,0.11);
         --red: #f87191;
         --radius: 10px;
         --shadow: 0 16px 48px rgba(0,0,0,0.55);
-        --shadow-sm: 0 4px 16px rgba(0,0,0,0.35);
       }
 
       * { box-sizing: border-box; }
@@ -44,8 +42,7 @@
         color: var(--text);
         font-size: 13px;
         font-family: "Avenir Next","Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-        /* dot grid texture */
-        background-image: radial-gradient(circle, rgba(100,150,255,0.06) 1px, transparent 1px);
+        background-image: radial-gradient(circle, rgba(100,150,255,0.055) 1px, transparent 1px);
         background-size: 28px 28px;
         background-attachment: fixed;
       }
@@ -53,7 +50,6 @@
       button, input, textarea, select { font: inherit; }
       button { border: 0; }
 
-      /* ─── Layout ─── */
       .app {
         display: grid;
         grid-template-columns: 214px minmax(0,1fr);
@@ -61,7 +57,6 @@
         position: relative;
       }
 
-      /* ambient glow behind main */
       .app::before {
         content: "";
         position: fixed;
@@ -73,7 +68,7 @@
           radial-gradient(ellipse 600px 500px at 90% 90%, rgba(255,110,30,0.06) 0%, transparent 65%);
       }
 
-      /* ─── Sidebar ─── */
+      /* ── Sidebar ── */
       .sidebar {
         position: sticky;
         top: 0;
@@ -81,10 +76,10 @@
         z-index: 10;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
         padding: 16px 10px;
         border-right: 1px solid var(--line);
-        background: rgba(7, 9, 15, 0.92);
+        background: rgba(7,9,15,0.94);
         backdrop-filter: blur(12px);
       }
 
@@ -92,25 +87,24 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 6px 8px 14px;
+        padding: 6px 8px 12px;
         border-bottom: 1px solid var(--line);
       }
 
       .brand-mark {
         display: grid;
-        width: 32px;
-        height: 32px;
+        width: 32px; height: 32px;
         place-items: center;
         border-radius: 8px;
-        background: linear-gradient(135deg, rgba(255,122,26,0.25) 0%, rgba(255,80,0,0.15) 100%);
+        background: linear-gradient(135deg, rgba(255,122,26,0.25), rgba(255,80,0,0.15));
         border: 1px solid rgba(255,122,26,0.3);
         color: var(--accent);
-        font-weight: 800;
-        font-size: 12px;
+        font-weight: 800; font-size: 12px;
         box-shadow: 0 0 14px rgba(255,122,26,0.2);
+        flex-shrink: 0;
       }
 
-      .brand-title  { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.25; }
+      .brand-title   { margin: 0; font-size: 13px; font-weight: 600; }
       .brand-subtitle { margin: 0; color: var(--muted); font-size: 11px; }
 
       .nav { display: grid; gap: 2px; }
@@ -120,26 +114,26 @@
         align-items: center;
         gap: 9px;
         width: 100%;
-        min-height: 34px;
-        padding: 7px 10px;
+        min-height: 32px;
+        padding: 6px 10px;
         border-radius: 7px;
         background: transparent;
         color: var(--muted);
-        font-size: 12.5px;
+        font-size: 12px;
         text-align: left;
         cursor: pointer;
-        transition: background 140ms, color 140ms;
+        transition: background 130ms, color 130ms;
       }
 
-      .nav-button:hover  { background: var(--surface-2); color: var(--text); }
+      .nav-button:hover { background: var(--surface-2); color: var(--text); }
       .nav-button.active {
-        background: linear-gradient(90deg, rgba(91,163,245,0.1) 0%, rgba(91,163,245,0.04) 100%);
+        background: linear-gradient(90deg, rgba(91,163,245,0.1), rgba(91,163,245,0.03));
         border-left: 2px solid var(--blue);
         padding-left: 8px;
         color: var(--text);
       }
 
-      .nav-icon { display: grid; width: 20px; place-items: center; }
+      .nav-icon { display: grid; width: 18px; place-items: center; opacity: 0.75; font-size: 13px; }
 
       .sidebar-note {
         margin-top: auto;
@@ -149,23 +143,19 @@
         background: var(--surface-3);
       }
 
-      /* ─── Main ─── */
-      .main {
-        position: relative;
-        z-index: 1;
-        padding: 28px 32px 56px;
-      }
+      /* ── Main ── */
+      .main { position: relative; z-index: 1; padding: 26px 30px 56px; }
 
-      /* ─── Topbar ─── */
+      /* ── Topbar ── */
       .topbar {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 24px;
+        gap: 16px;
+        margin-bottom: 22px;
       }
 
-      .topbar-copy { display: grid; gap: 6px; }
+      .topbar-copy { display: grid; gap: 5px; }
 
       .eyebrow {
         margin: 0 0 4px;
@@ -176,16 +166,9 @@
         text-transform: uppercase;
       }
 
-      h1 {
-        margin: 0;
-        font-size: 22px;
-        line-height: 1.2;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-      }
+      h1 { margin: 0; font-size: 21px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
 
-      /* ─── Buttons ─── */
-      .toolbar, .row, .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+      .toolbar, .actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
       .button {
         display: inline-flex;
@@ -193,49 +176,43 @@
         justify-content: center;
         gap: 7px;
         min-height: 34px;
-        padding: 7px 15px;
+        padding: 7px 14px;
         border-radius: 7px;
         background: var(--surface-2);
         color: var(--text);
         border: 1px solid var(--line-strong);
         cursor: pointer;
-        font-size: 12.5px;
-        font-weight: 600;
-        transition: background 130ms, box-shadow 130ms;
+        font-size: 12.5px; font-weight: 600;
+        transition: background 120ms, box-shadow 120ms;
       }
 
       .button:hover { background: var(--surface-4); }
 
       .button.primary {
-        background: linear-gradient(135deg, #ff8533 0%, #f97316 50%, #e8600a 100%);
+        background: linear-gradient(135deg, #ff8533, #f97316, #e8600a);
         border-color: transparent;
         color: white;
-        box-shadow: 0 0 20px rgba(255,122,26,0.35), 0 4px 12px rgba(255,80,0,0.25);
+        box-shadow: 0 0 18px rgba(255,122,26,0.35), 0 4px 10px rgba(255,80,0,0.2);
       }
 
-      .button.primary:hover {
-        box-shadow: 0 0 28px rgba(255,122,26,0.5), 0 4px 16px rgba(255,80,0,0.35);
-      }
-
+      .button.primary:hover { box-shadow: 0 0 26px rgba(255,122,26,0.5), 0 4px 14px rgba(255,80,0,0.3); }
+      .button.primary:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
       .button.dark { background: #d8e6f8; border-color: #d8e6f8; color: #0b1420; }
-      .button.ghost { background: transparent; }
 
-      /* ─── Grid ─── */
+      /* ── Grid ── */
       .grid { display: grid; gap: 14px; }
-      .summary-grid { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
-      .work-grid    { grid-template-columns: minmax(0, 1.65fr) minmax(290px, 0.9fr); }
-      .three-grid   { grid-template-columns: repeat(3, minmax(0,1fr)); }
-      .overview-hero { grid-template-columns: minmax(0,1fr) 284px; align-items: stretch; }
+      .summary-grid  { grid-template-columns: repeat(4, minmax(130px,1fr)); }
+      .work-grid     { grid-template-columns: minmax(0,1.65fr) minmax(280px,0.9fr); }
+      .three-grid    { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .two-grid      { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .overview-hero { grid-template-columns: minmax(0,1fr) 276px; align-items: stretch; }
 
-      /* ─── Cards ─── */
-      .card, .panel {
-        border-radius: var(--radius);
-        border: 1px solid var(--line);
-      }
+      /* ── Cards ── */
+      .card, .panel { border-radius: var(--radius); border: 1px solid var(--line); }
 
       .card {
         padding: 18px;
-        background: rgba(13, 18, 32, 0.9);
+        background: rgba(13,18,32,0.9);
         box-shadow: var(--shadow);
         backdrop-filter: blur(4px);
         transition: border-color 200ms;
@@ -243,47 +220,35 @@
 
       .card:hover { border-color: var(--line-strong); }
 
-      .panel {
-        padding: 12px 14px;
-        background: var(--surface-3);
-      }
+      .panel { padding: 12px 14px; background: var(--surface-3); }
 
-      /* Hero: orange-tinted glow on top edge */
       .hero-card {
-        background: linear-gradient(160deg, rgba(16,22,40,0.97) 0%, rgba(8,13,24,0.97) 100%);
+        background: linear-gradient(160deg, rgba(16,22,40,0.97), rgba(8,13,24,0.97));
         border-color: rgba(255,122,26,0.18);
         box-shadow: var(--shadow), 0 0 40px rgba(255,100,20,0.08);
-        position: relative;
-        overflow: hidden;
+        position: relative; overflow: hidden;
       }
 
       .hero-card::before {
         content: "";
-        position: absolute;
-        inset: 0;
+        position: absolute; inset: 0;
         background: linear-gradient(130deg, rgba(255,122,26,0.06) 0%, transparent 45%);
         pointer-events: none;
       }
 
-      /* Metric cards: subtle top glow */
-      .metric-card {
-        position: relative;
-        overflow: hidden;
-      }
+      .metric-card { position: relative; overflow: hidden; }
 
       .metric-card::after {
         content: "";
         position: absolute;
         top: 0; left: 20%; right: 20%;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(91,163,245,0.5), transparent);
+        background: linear-gradient(90deg, transparent, rgba(91,163,245,0.45), transparent);
       }
 
-      /* ─── Typography ─── */
+      /* ── Typography ── */
       .section-title, .card-title, .queue-title, .step-title, .brand-title {
-        margin: 0;
-        font-weight: 600;
-        line-height: 1.25;
+        margin: 0; font-weight: 600; line-height: 1.25;
       }
 
       .section-title { font-size: 16px; }
@@ -291,275 +256,262 @@
       .card-title    { font-size: 13px; }
 
       .metric-value {
-        margin: 0;
-        font-size: 28px;
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -0.02em;
-        background: linear-gradient(135deg, #e2ecff 0%, var(--blue) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        margin: 0; font-size: 28px; font-weight: 800; line-height: 1; letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #e2ecff, var(--blue));
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       }
 
       .metric-label { margin: 6px 0 0; color: var(--muted); font-size: 11.5px; }
       .section-copy { display: grid; gap: 5px; }
-      .hero-copy    { display: grid; gap: 10px; position: relative; }
       .muted  { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
       .small  { margin: 0; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
 
-      /* ─── Feature pills ─── */
+      /* ── Feature pills ── */
       .feature-row { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
-
       .feature-pill {
-        display: grid;
-        gap: 3px;
-        padding: 11px 12px;
-        border: 1px solid rgba(180,210,255,0.09);
-        border-radius: 8px;
+        display: grid; gap: 3px; padding: 11px 12px;
+        border: 1px solid rgba(180,210,255,0.09); border-radius: 8px;
         background: rgba(6,9,15,0.5);
       }
 
-      /* ─── Guide ─── */
+      /* ── Guide ── */
       .guide-list { display: grid; gap: 8px; }
-
       .guide-step {
-        display: grid;
-        grid-template-columns: 26px minmax(0,1fr);
-        gap: 10px;
-        align-items: start;
-        padding: 10px 12px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface-3);
+        display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 10px;
+        align-items: start; padding: 10px 12px;
+        border: 1px solid var(--line); border-radius: 8px; background: var(--surface-3);
       }
-
       .guide-index {
-        display: grid;
-        width: 24px; height: 24px;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--blue-dim);
-        border: 1px solid rgba(91,163,245,0.2);
-        color: var(--blue);
-        font-size: 11px; font-weight: 800;
+        display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%;
+        background: var(--blue-dim); border: 1px solid rgba(91,163,245,0.2);
+        color: var(--blue); font-size: 11px; font-weight: 800;
       }
 
-      /* ─── Badges ─── */
+      /* ── Badges ── */
       .badge {
-        display: inline-flex;
-        align-items: center;
-        min-height: 22px;
-        padding: 2px 9px;
-        border-radius: 999px;
-        background: var(--surface-2);
-        color: var(--muted);
-        font-size: 10.5px;
-        font-weight: 700;
-        letter-spacing: 0.03em;
-        white-space: nowrap;
+        display: inline-flex; align-items: center; min-height: 22px; padding: 2px 9px;
+        border-radius: 999px; background: var(--surface-2); color: var(--muted);
+        font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; white-space: nowrap;
       }
-
       .badge.green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(61,214,140,0.2); }
       .badge.amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,183,49,0.2); }
       .badge.blue  { background: var(--blue-dim);  color: var(--blue);  border: 1px solid rgba(91,163,245,0.2); }
       .badge.red   { background: rgba(248,113,145,0.1); color: var(--red); }
 
-      /* ─── Progress steps ─── */
+      /* ── Progress steps ── */
       .progress { display: grid; gap: 7px; }
-
       .step {
-        display: grid;
-        grid-template-columns: 28px minmax(0,1fr) auto;
-        gap: 10px;
-        align-items: center;
-        padding: 9px 12px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface-3);
-        transition: border-color 200ms;
+        display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 10px;
+        align-items: center; padding: 9px 12px;
+        border: 1px solid var(--line); border-radius: 8px; background: var(--surface-3);
       }
-
-      .step.done {
-        border-color: rgba(61,214,140,0.2);
-        background: rgba(61,214,140,0.04);
-      }
-
-      .step.active {
-        border-color: rgba(255,122,26,0.35);
-        background: rgba(255,122,26,0.06);
-        box-shadow: 0 0 20px rgba(255,100,20,0.08);
-      }
-
+      .step.done  { border-color: rgba(61,214,140,0.2);  background: rgba(61,214,140,0.04); }
+      .step.active { border-color: rgba(255,122,26,0.35); background: rgba(255,122,26,0.06); box-shadow: 0 0 18px rgba(255,100,20,0.07); }
       .dot {
-        display: grid;
-        width: 24px; height: 24px;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--surface-2);
-        color: var(--muted);
-        font-size: 11px; font-weight: 700;
-        flex-shrink: 0;
+        display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%;
+        background: var(--surface-2); color: var(--muted); font-size: 11px; font-weight: 700; flex-shrink: 0;
       }
-
       .done .dot  { background: rgba(61,214,140,0.15); color: var(--green); border: 1px solid rgba(61,214,140,0.3); }
       .active .dot { background: rgba(255,122,26,0.2); color: var(--accent); border: 1px solid rgba(255,122,26,0.4); box-shadow: 0 0 10px rgba(255,100,20,0.3); }
-
       .step-title { font-size: 13px; }
       .step-copy  { margin: 2px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.5; }
 
-      /* ─── Content tabs ─── */
-      .content-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-
-      .tab {
-        min-height: 32px;
-        padding: 6px 13px;
-        border: 1px solid var(--line);
-        border-radius: 6px;
-        background: var(--surface-3);
-        color: var(--muted);
-        cursor: pointer;
-        font-size: 12.5px;
-        transition: all 120ms;
+      /* ── AI Loader ── */
+      .ai-loading {
+        display: flex; align-items: center; justify-content: center;
+        min-height: 260px; padding: 32px;
       }
 
-      .tab.active {
-        border-color: rgba(91,163,245,0.3);
-        background: var(--blue-dim);
-        color: var(--blue);
-        font-weight: 700;
+      .ai-pulse {
+        display: flex; align-items: center; gap: 18px;
+        padding: 20px 28px; border: 1px solid rgba(91,163,245,0.18);
+        border-radius: 12px; background: rgba(91,163,245,0.04);
       }
 
-      .preview {
-        min-height: 190px;
-        margin: 0;
-        padding: 16px;
+      .ai-spinner {
+        width: 28px; height: 28px; flex-shrink: 0;
+        border: 2px solid rgba(91,163,245,0.2);
+        border-top-color: var(--blue);
+        border-radius: 50%;
+        animation: spin 700ms linear infinite;
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .ai-status { margin: 0; font-size: 14px; font-weight: 600; color: var(--text); }
+
+      /* ── AI Result ── */
+      .ai-result { display: none; }
+      .ai-result.visible { display: grid; gap: 14px; animation: fadeUp 350ms ease; }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: none; }
+      }
+
+      .insight-card {
+        padding: 16px 18px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: rgba(4, 7, 14, 0.8);
-        color: var(--text);
-        font-size: 13.5px;
-        line-height: 1.85;
-        white-space: pre-wrap;
-        font-family: inherit;
+        background: var(--surface-3);
+        display: grid; gap: 6px;
       }
 
-      /* ─── Channel cards ─── */
+      .insight-title { margin: 0; font-size: 11px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; }
+      .insight-text  { margin: 0; font-size: 13px; line-height: 1.7; color: var(--text); }
+
+      .strategy-positioning {
+        padding: 20px 22px;
+        border: 1px solid rgba(255,122,26,0.25);
+        border-radius: var(--radius);
+        background: rgba(255,122,26,0.05);
+      }
+
+      .strategy-label { margin: 0 0 6px; font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; }
+      .strategy-text  { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.5; }
+
+      .angle-row {
+        display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 12px;
+        align-items: start; padding: 12px 14px;
+        border: 1px solid var(--line); border-radius: 8px; background: var(--surface-3);
+      }
+
+      .angle-channel { font-size: 11px; font-weight: 700; color: var(--muted); padding-top: 2px; }
+      .angle-text    { font-size: 13px; line-height: 1.6; }
+
+      /* ── Decision chart ── */
+      .chart { display: grid; gap: 12px; }
+
+      .bar-row {
+        display: grid; grid-template-columns: 90px minmax(0,1fr) 80px;
+        gap: 12px; align-items: center;
+      }
+
+      .bar-label { font-size: 12.5px; font-weight: 600; }
+
+      .bar-track {
+        height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden;
+      }
+
+      .bar-fill {
+        height: 100%; border-radius: 4px;
+        background: linear-gradient(90deg, var(--blue), rgba(91,163,245,0.6));
+        width: 0; transition: width 900ms cubic-bezier(0.4,0,0.2,1);
+      }
+
+      .bar-fill.green { background: linear-gradient(90deg, var(--green), rgba(61,214,140,0.6)); }
+      .bar-fill.amber { background: linear-gradient(90deg, var(--amber), rgba(245,183,49,0.6)); }
+
+      .bar-stat { font-size: 11.5px; color: var(--muted); text-align: right; }
+
+      .decision-box {
+        padding: 20px 22px;
+        border-radius: var(--radius);
+        background: rgba(61,214,140,0.06);
+        border: 1px solid rgba(61,214,140,0.22);
+        display: grid; gap: 8px;
+      }
+
+      .decision-verdict { font-size: 22px; font-weight: 800; color: var(--green); letter-spacing: -0.01em; }
+      .decision-reason  { font-size: 13px; line-height: 1.7; color: var(--muted); }
+
+      /* ── Content tabs ── */
+      .content-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+      .tab {
+        min-height: 32px; padding: 6px 13px;
+        border: 1px solid var(--line); border-radius: 6px;
+        background: var(--surface-3); color: var(--muted);
+        cursor: pointer; font-size: 12.5px; transition: all 120ms;
+      }
+      .tab.active { border-color: rgba(91,163,245,0.3); background: var(--blue-dim); color: var(--blue); font-weight: 700; }
+
+      .preview {
+        min-height: 180px; margin: 0; padding: 16px;
+        border: 1px solid var(--line); border-radius: var(--radius);
+        background: rgba(4,7,14,0.8); color: var(--text);
+        font-size: 13.5px; line-height: 1.85; white-space: pre-wrap; font-family: inherit;
+      }
+
+      /* ── Channel cards ── */
       .channel-card { display: grid; gap: 10px; }
       .channel-head { display: flex; justify-content: space-between; gap: 12px; }
 
-      /* ─── Toggle ─── */
       .toggle {
-        position: relative;
-        display: inline-flex;
-        width: 40px; height: 22px;
-        padding: 2px;
-        border-radius: 999px;
-        background: var(--surface-4);
-        border: 1px solid var(--line-strong);
-        cursor: pointer;
-        flex-shrink: 0;
-        transition: background 140ms, border-color 140ms;
+        position: relative; display: inline-flex; width: 40px; height: 22px; padding: 2px;
+        border-radius: 999px; background: var(--surface-4); border: 1px solid var(--line-strong);
+        cursor: pointer; flex-shrink: 0; transition: background 140ms, border-color 140ms;
       }
-
       .toggle input { position: absolute; opacity: 0; }
-
       .toggle span {
-        width: 18px; height: 18px;
-        border-radius: 50%;
-        background: #8099b8;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        width: 18px; height: 18px; border-radius: 50%;
+        background: #8099b8; box-shadow: 0 1px 4px rgba(0,0,0,0.4);
         transition: transform 140ms ease;
       }
-
       .toggle input:checked + span { transform: translateX(18px); background: white; }
       .toggle:has(input:checked) { background: rgba(61,214,140,0.3); border-color: rgba(61,214,140,0.4); }
 
-      /* ─── Queue ─── */
+      /* ── Queue ── */
       .queue-list { display: grid; gap: 8px; }
-
       .queue-item {
-        display: grid;
-        grid-template-columns: minmax(0,1fr) auto;
-        gap: 10px;
-        align-items: center;
-        padding: 11px 12px;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--surface-3);
+        display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px;
+        align-items: center; padding: 10px 12px;
+        border: 1px solid var(--line); border-radius: 8px; background: var(--surface-3);
         transition: border-color 200ms;
       }
-
       .queue-item:hover { border-color: var(--line-strong); }
       .queue-title { font-size: 13px; }
 
-      /* ─── Screens ─── */
+      /* ── Screens ── */
       .screen { display: none; }
       .screen.active { display: grid; gap: 16px; }
 
-      /* ─── Form ─── */
+      /* ── Form ── */
       .input, textarea {
-        width: 100%;
-        border: 1px solid var(--line-strong);
-        border-radius: 7px;
-        background: rgba(4,7,14,0.7);
-        color: var(--text);
-        transition: border-color 140ms;
+        width: 100%; border: 1px solid var(--line-strong); border-radius: 7px;
+        background: rgba(4,7,14,0.7); color: var(--text); transition: border-color 140ms;
       }
-
       .input:focus, textarea:focus { outline: none; border-color: rgba(91,163,245,0.4); box-shadow: 0 0 0 3px rgba(91,163,245,0.08); }
       .input { height: 38px; padding: 0 12px; }
-      textarea { min-height: 110px; padding: 11px 12px; line-height: 1.6; resize: vertical; }
-
+      textarea { min-height: 100px; padding: 11px 12px; line-height: 1.6; resize: vertical; }
       .form-grid { display: grid; gap: 12px; }
       label { display: grid; gap: 5px; }
       .label { color: var(--muted); font-size: 11.5px; font-weight: 700; }
 
-      /* ─── Activity ─── */
-      .activity { display: grid; gap: 8px; }
-
+      /* ── Activity ── */
+      .activity { display: grid; gap: 7px; }
       .activity-row {
-        display: grid;
-        grid-template-columns: 78px minmax(0,1fr);
-        gap: 10px;
-        padding: 8px 12px;
-        border-radius: 7px;
-        background: var(--surface-3);
-        color: var(--muted);
-        font-size: 12.5px;
-        line-height: 1.55;
+        display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 10px;
+        padding: 8px 12px; border-radius: 7px; background: var(--surface-3);
+        color: var(--muted); font-size: 12.5px; line-height: 1.55;
       }
 
-      /* ─── Toast ─── */
+      /* ── Toast ── */
       .toast {
-        position: fixed;
-        right: 22px; bottom: 22px;
+        position: fixed; right: 22px; bottom: 22px;
         max-width: min(340px, calc(100vw - 44px));
         padding: 11px 15px;
-        border: 1px solid rgba(91,163,245,0.2);
-        border-radius: var(--radius);
-        background: #e2ecff;
-        color: #0b1420;
-        box-shadow: 0 16px 50px rgba(0,0,0,0.4), 0 0 20px rgba(91,163,245,0.15);
-        opacity: 0;
-        transform: translateY(8px);
-        pointer-events: none;
+        border: 1px solid rgba(91,163,245,0.2); border-radius: var(--radius);
+        background: #e2ecff; color: #0b1420;
+        box-shadow: 0 16px 50px rgba(0,0,0,0.4), 0 0 20px rgba(91,163,245,0.12);
+        opacity: 0; transform: translateY(8px); pointer-events: none;
         transition: opacity 150ms ease, transform 150ms ease;
-        font-size: 13px; font-weight: 600;
-        z-index: 100;
+        font-size: 13px; font-weight: 600; z-index: 100;
       }
-
       .toast.show { opacity: 1; transform: translateY(0); }
 
-      /* ─── Mobile ─── */
+      /* ── Next step label ── */
+      #nextStepLabel { transition: opacity 120ms; }
+
+      /* ── Mobile ── */
       @media (max-width: 960px) {
         .app { grid-template-columns: 1fr; }
         .sidebar { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
         .nav { grid-template-columns: repeat(3, minmax(0,1fr)); }
         .sidebar-note { display: none; }
         .main { padding: 20px 16px 44px; }
-        .topbar, .overview-hero, .work-grid, .feature-row, .three-grid, .summary-grid { grid-template-columns: 1fr; }
+        .topbar, .overview-hero, .work-grid, .feature-row, .three-grid, .two-grid, .summary-grid { grid-template-columns: 1fr; }
         .topbar { display: grid; }
+        .bar-row { grid-template-columns: 70px minmax(0,1fr) 60px; }
       }
 
       @media (max-width: 580px) {
@@ -581,17 +533,19 @@
         </div>
 
         <nav class="nav" aria-label="Demo navigation">
-          <button class="nav-button active" data-screen="overview"><span class="nav-icon">⌁</span><span>Главная</span></button>
-          <button class="nav-button" data-screen="product"><span class="nav-icon">□</span><span>Продукт</span></button>
-          <button class="nav-button" data-screen="content"><span class="nav-icon">✎</span><span>Контент</span></button>
-          <button class="nav-button" data-screen="calendar"><span class="nav-icon">◷</span><span>Календарь</span></button>
-          <button class="nav-button" data-screen="metrics"><span class="nav-icon">▥</span><span>Метрики</span></button>
-          <button class="nav-button" data-screen="settings"><span class="nav-icon">⚙</span><span>Безопасность</span></button>
+          <button class="nav-button active" data-screen="overview">  <span class="nav-icon">⌁</span><span>Главная</span></button>
+          <button class="nav-button" data-screen="product">          <span class="nav-icon">□</span><span>Продукт</span></button>
+          <button class="nav-button" data-screen="research">         <span class="nav-icon">◎</span><span>Исследование</span></button>
+          <button class="nav-button" data-screen="strategy">         <span class="nav-icon">◈</span><span>Стратегия</span></button>
+          <button class="nav-button" data-screen="content">          <span class="nav-icon">✎</span><span>Контент</span></button>
+          <button class="nav-button" data-screen="calendar">         <span class="nav-icon">◷</span><span>Календарь</span></button>
+          <button class="nav-button" data-screen="decision">         <span class="nav-icon">▥</span><span>Решение T+48h</span></button>
+          <button class="nav-button" data-screen="settings">         <span class="nav-icon">⚙</span><span>Безопасность</span></button>
         </nav>
 
         <div class="sidebar-note">
           <p class="card-title">Публичное демо</p>
-          <p class="small" style="margin-top:5px">Кнопки кликаются, но ничего не публикуют. Реальных ключей, базы данных и доступа к каналам здесь нет.</p>
+          <p class="small" style="margin-top:5px">AI — настоящий. Кнопки — реальные. Публикаций нет: ключей и базы данных здесь нет.</p>
         </div>
       </aside>
 
@@ -602,11 +556,11 @@
               <p class="eyebrow">Launch Engine Demo</p>
               <h1>Панель для запуска продуктов в несколько каналов</h1>
             </div>
-            <p class="muted">Кликабельное демо: продукт, тексты, расписание, метрики и решение по запуску.</p>
+            <p class="muted">Реальный AI: введи продукт, получи исследование, стратегию и контент.</p>
           </div>
           <div class="toolbar">
-            <button class="button" id="resetDemo">Сбросить демо</button>
-            <button class="button primary" id="nextStep">Следующий этап →</button>
+            <button class="button" id="resetDemo">Сбросить</button>
+            <button class="button primary" id="nextStep"><span id="nextStepLabel">Следующий этап →</span></button>
           </div>
         </header>
 
@@ -614,24 +568,15 @@
         <section class="screen active" id="overview">
           <div class="overview-hero grid">
             <article class="card hero-card grid">
-              <div class="hero-copy">
+              <div style="display:grid;gap:10px;position:relative">
                 <p class="eyebrow">Что перед вами</p>
                 <h2 class="hero-title">Рабочий пульт: от идеи до первых метрик</h2>
-                <p class="muted">Launch Engine держит весь запуск в одной карточке — продукт, каналы, материалы, проверки, публикации и итоговое решение.</p>
+                <p class="muted">Launch Engine проводит запуск автономно — исследует рынок, формирует стратегию, пишет контент под каждый канал и принимает решение по результатам. Человек только подтверждает ключевые шаги.</p>
               </div>
               <div class="feature-row">
-                <div class="feature-pill">
-                  <p class="card-title">Продукт</p>
-                  <p class="small" style="margin-top:3px">Brief, бренд и каналы.</p>
-                </div>
-                <div class="feature-pill">
-                  <p class="card-title">Контент</p>
-                  <p class="small" style="margin-top:3px">Тексты проходят ревью.</p>
-                </div>
-                <div class="feature-pill">
-                  <p class="card-title">Результат</p>
-                  <p class="small" style="margin-top:3px">Метрики и решение.</p>
-                </div>
+                <div class="feature-pill"><p class="card-title">Исследование</p><p class="small" style="margin-top:3px">AI анализирует рынок и аудиторию.</p></div>
+                <div class="feature-pill"><p class="card-title">Стратегия</p><p class="small" style="margin-top:3px">Позиционирование и углы по каналам.</p></div>
+                <div class="feature-pill"><p class="card-title">Решение T+48h</p><p class="small" style="margin-top:3px">Данные определяют: live, iterate, kill.</p></div>
               </div>
             </article>
 
@@ -641,51 +586,26 @@
                 <h2 class="section-title">Три минуты на знакомство</h2>
               </div>
               <div class="guide-list">
-                <div class="guide-step">
-                  <span class="guide-index">1</span>
-                  <div><p class="card-title">Нажмите «Следующий этап»</p><p class="small" style="margin-top:3px">Увидите маршрут запуска.</p></div>
-                </div>
-                <div class="guide-step">
-                  <span class="guide-index">2</span>
-                  <div><p class="card-title">Откройте «Контент»</p><p class="small" style="margin-top:3px">Посмотрите тексты по каналам.</p></div>
-                </div>
-                <div class="guide-step">
-                  <span class="guide-index">3</span>
-                  <div><p class="card-title">Зайдите в «Безопасность»</p><p class="small" style="margin-top:3px">Проверьте, что ключей тут нет.</p></div>
-                </div>
+                <div class="guide-step"><span class="guide-index">1</span><div><p class="card-title">Заполните карточку продукта</p><p class="small" style="margin-top:3px">Название и описание своего продукта.</p></div></div>
+                <div class="guide-step"><span class="guide-index">2</span><div><p class="card-title">Нажмите «Следующий этап»</p><p class="small" style="margin-top:3px">AI сделает исследование и стратегию.</p></div></div>
+                <div class="guide-step"><span class="guide-index">3</span><div><p class="card-title">Проверьте «Решение T+48h»</p><p class="small" style="margin-top:3px">Посмотрите как система принимает решение.</p></div></div>
               </div>
             </aside>
           </div>
 
           <div class="summary-grid grid">
-            <article class="card metric-card">
-              <p class="eyebrow">Продукты</p>
-              <p class="metric-value" id="productCount" style="margin-top:6px">3</p>
-              <p class="metric-label">тестовых карточки</p>
-            </article>
-            <article class="card metric-card">
-              <p class="eyebrow">На проверке</p>
-              <p class="metric-value" id="readyCount" style="margin-top:6px">1</p>
-              <p class="metric-label">материалы ждут решения</p>
-            </article>
-            <article class="card metric-card">
-              <p class="eyebrow">Публикации</p>
-              <p class="metric-value" id="publishedCount" style="margin-top:6px">8</p>
-              <p class="metric-label">постов за неделю</p>
-            </article>
-            <article class="card metric-card">
-              <p class="eyebrow">Риски</p>
-              <p class="metric-value" id="errorCount" style="margin-top:6px">2</p>
-              <p class="metric-label">нужна ручная проверка</p>
-            </article>
+            <article class="card metric-card"><p class="eyebrow">Продукты</p><p class="metric-value" id="productCount" style="margin-top:6px">1</p><p class="metric-label">в этом демо</p></article>
+            <article class="card metric-card"><p class="eyebrow">На проверке</p><p class="metric-value" id="readyCount" style="margin-top:6px">3</p><p class="metric-label">материалы ждут</p></article>
+            <article class="card metric-card"><p class="eyebrow">Публикации</p><p class="metric-value" id="publishedCount" style="margin-top:6px">7</p><p class="metric-label">постов за неделю</p></article>
+            <article class="card metric-card"><p class="eyebrow">AI-шаги</p><p class="metric-value" id="aiSteps" style="margin-top:6px">0</p><p class="metric-label">выполнено в демо</p></article>
           </div>
 
           <div class="work-grid grid">
             <article class="card grid">
               <div class="section-copy">
                 <p class="eyebrow">Маршрут запуска</p>
-                <h2 class="section-title">Пример: ULA Morta</h2>
-                <p class="muted">Каждый продукт движется по цепочке: исследование, стратегия, проверка, контент, публикации, решение.</p>
+                <h2 class="section-title" id="progressTitle">Введите продукт и начните</h2>
+                <p class="muted">Каждый продукт движется по цепочке — AI делает работу, человек принимает решения.</p>
               </div>
               <div class="progress" id="progress"></div>
             </article>
@@ -707,20 +627,19 @@
               <div class="section-copy">
                 <p class="eyebrow">Карточка продукта</p>
                 <h2 class="section-title">С чего начинается запуск</h2>
-                <p class="muted">Здесь фиксируется что за продукт, кому он нужен, какую проблему решает и в каких каналах его проверять.</p>
+                <p class="muted">Введи свой реальный продукт — AI проведёт исследование и стратегию именно под него.</p>
               </div>
               <div class="form-grid">
                 <label>
                   <span class="label">Название продукта</span>
-                  <input class="input" id="productName" value="ULA Morta" />
+                  <input class="input" id="productName" value="Launch Engine" />
                 </label>
                 <label>
                   <span class="label">Короткое описание</span>
-                  <textarea id="productBrief">Продукт для тестового запуска: быстро сформировать позиционирование, подготовить материалы под каналы и проверить реакцию аудитории без хаоса в таблицах и чатах.</textarea>
+                  <textarea id="productBrief">Инструмент для автономного запуска продуктов в несколько каналов. Исследует рынок, формирует стратегию, генерирует контент и принимает решение по метрикам — всё без ручного труда маркетолога.</textarea>
                 </label>
                 <div class="actions">
-                  <button class="button primary" id="saveBrief">Сохранить описание</button>
-                  <button class="button" data-screen-target="content">Открыть контент</button>
+                  <button class="button primary" id="saveBrief">Сохранить и продолжить</button>
                 </div>
               </div>
             </article>
@@ -735,17 +654,101 @@
           </div>
         </section>
 
+        <!-- Research -->
+        <section class="screen" id="research">
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Исследование рынка</p>
+              <h2 class="section-title" id="researchHeading">Анализ аудитории и рынка</h2>
+            </div>
+
+            <div class="ai-loading" id="researchLoader" style="display:none">
+              <div class="ai-pulse">
+                <div class="ai-spinner"></div>
+                <div>
+                  <p class="ai-status" id="researchStatus">Анализирую рынок...</p>
+                  <p class="small" style="margin-top:4px">Claude изучает аудиторию, конкурентов и инсайты</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-result two-grid" id="researchResult">
+              <div class="insight-card"><p class="insight-title">Кто покупает</p><p class="insight-text" id="r-audience">—</p></div>
+              <div class="insight-card"><p class="insight-title">Рынок</p><p class="insight-text" id="r-market">—</p></div>
+              <div class="insight-card"><p class="insight-title">Конкуренты</p><p class="insight-text" id="r-competitors">—</p></div>
+              <div class="insight-card"><p class="insight-title">Ключевой инсайт</p><p class="insight-text" id="r-insight">—</p></div>
+            </div>
+
+            <div class="actions" id="researchActions" style="display:none">
+              <button class="button primary" id="approveResearch">Принять исследование →</button>
+            </div>
+          </article>
+        </section>
+
+        <!-- Strategy -->
+        <section class="screen" id="strategy">
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Стратегия запуска</p>
+              <h2 class="section-title">Позиционирование и углы подачи</h2>
+            </div>
+
+            <div class="ai-loading" id="strategyLoader" style="display:none">
+              <div class="ai-pulse">
+                <div class="ai-spinner"></div>
+                <div>
+                  <p class="ai-status" id="strategyStatus">Формирую стратегию...</p>
+                  <p class="small" style="margin-top:4px">Claude строит позиционирование и оффер</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="ai-result" id="strategyResult">
+              <div class="strategy-positioning">
+                <p class="strategy-label">Позиционирование</p>
+                <p class="strategy-text" id="s-positioning">—</p>
+              </div>
+              <div class="insight-card">
+                <p class="insight-title">Оффер</p>
+                <p class="insight-text" id="s-offer">—</p>
+              </div>
+              <div class="section-copy">
+                <p class="eyebrow">Углы подачи по каналам</p>
+              </div>
+              <div id="s-angles" class="grid"></div>
+            </div>
+
+            <div class="actions" id="strategyActions" style="display:none">
+              <button class="button primary" id="approveStrategy">Принять стратегию →</button>
+              <button class="button" id="regenStrategy">Перегенерировать</button>
+            </div>
+          </article>
+        </section>
+
         <!-- Content -->
         <section class="screen" id="content">
           <article class="card grid">
             <div class="section-copy">
-              <p class="eyebrow">Проверка контента</p>
-              <h2 class="section-title">Материалы перед публикацией</h2>
-              <p class="muted">Каждый канал получает свой формат текста. Человек видит материал, принимает его или отправляет на переработку.</p>
+              <p class="eyebrow">Контент</p>
+              <h2 class="section-title">Тексты под каждый канал</h2>
+              <p class="muted">AI пишет пост в формате канала. Примите или отправьте на переработку.</p>
             </div>
+
             <div class="content-tabs" id="contentTabs"></div>
-            <pre class="preview" id="contentPreview"></pre>
-            <div class="actions">
+
+            <div class="ai-loading" id="contentLoader" style="display:none">
+              <div class="ai-pulse">
+                <div class="ai-spinner"></div>
+                <div>
+                  <p class="ai-status" id="contentStatus">Пишу текст...</p>
+                  <p class="small" style="margin-top:4px">Claude адаптирует формат под канал</p>
+                </div>
+              </div>
+            </div>
+
+            <pre class="preview" id="contentPreview" style="display:none"></pre>
+
+            <div class="actions" id="contentActions" style="display:none">
               <button class="button primary" id="approveContent">Принять текст</button>
               <button class="button" id="regenerateContent">Перегенерировать</button>
               <button class="button dark" id="scheduleContent">Поставить в расписание</button>
@@ -764,37 +767,32 @@
           </article>
         </section>
 
-        <!-- Metrics -->
-        <section class="screen" id="metrics">
-          <div class="summary-grid grid">
-            <article class="card metric-card">
-              <p class="eyebrow">Охват</p>
-              <p class="metric-value" style="margin-top:6px">42.8k</p>
-              <p class="metric-label">суммарный охват</p>
+        <!-- Decision -->
+        <section class="screen" id="decision">
+          <div class="work-grid grid">
+            <article class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Решение T+48h</p>
+                <h2 class="section-title">Автоматический вердикт по метрикам</h2>
+                <p class="muted">Через 48 часов после публикации система собирает данные и принимает решение без участия человека.</p>
+              </div>
+              <div class="chart" id="decisionChart"></div>
             </article>
-            <article class="card metric-card">
-              <p class="eyebrow">Переходы</p>
-              <p class="metric-value" style="margin-top:6px">3.7%</p>
-              <p class="metric-label">по redirect links</p>
-            </article>
-            <article class="card metric-card">
-              <p class="eyebrow">Решение</p>
-              <p class="metric-value" style="margin-top:6px">Live</p>
-              <p class="metric-label">после T+48h</p>
-            </article>
-            <article class="card metric-card">
-              <p class="eyebrow">Качество</p>
-              <p class="metric-value" style="margin-top:6px">91</p>
-              <p class="metric-label">self-eval score</p>
-            </article>
+
+            <aside class="card grid">
+              <div class="decision-box">
+                <p class="eyebrow">Вердикт</p>
+                <p class="decision-verdict">LIVE ✓</p>
+                <p class="decision-reason">CTR выше базовой линии в Telegram и VK. Охват соответствует прогнозу. Рекомендация: масштабировать Telegram, приостановить OK, заморозить Dzen.</p>
+              </div>
+              <div class="section-copy">
+                <p class="eyebrow">Score</p>
+                <p class="metric-value" style="margin-top:4px">82<span style="-webkit-text-fill-color:var(--muted);font-size:14px;font-weight:400">/100</span></p>
+                <p class="metric-label">self-eval по качеству контента и метрикам</p>
+              </div>
+              <div class="activity" id="decisionLog"></div>
+            </aside>
           </div>
-          <article class="card grid">
-            <div class="section-copy">
-              <p class="eyebrow">Журнал</p>
-              <h2 class="section-title">Что произошло в запуске</h2>
-            </div>
-            <div class="activity" id="activity"></div>
-          </article>
         </section>
 
         <!-- Security -->
@@ -803,12 +801,12 @@
             <div class="section-copy">
               <p class="eyebrow">Безопасность</p>
               <h2 class="section-title">Что не попадает в публичный интерфейс</h2>
-              <p class="muted">Это публичное демо не подключено к реальным сервисам. В рабочей версии все секреты находятся только на backend: база данных, LLM-провайдеры, хранилище, cookies, токены каналов.</p>
+              <p class="muted">AI-запросы идут через backend — ANTHROPIC_API_KEY, ключи каналов, cookies, токены и база данных находятся только на сервере. В этом демо публичный HTML вызывает защищённый endpoint.</p>
             </div>
             <div class="three-grid grid">
-              <div class="panel"><p class="card-title">Публичный интерфейс</p><p class="small" style="margin-top:5px">Показывает карточки, контент, календарь, ревью и метрики.</p></div>
-              <div class="panel"><p class="card-title">Серверная часть</p><p class="small" style="margin-top:5px">Хранит ключи, работает с БД, очередью, LLM и интеграциями.</p></div>
-              <div class="panel"><p class="card-title">Этот демо-сайт</p><p class="small" style="margin-top:5px">Статическая страница на GitHub Pages без реальных данных и ключей.</p></div>
+              <div class="panel"><p class="card-title">Этот HTML</p><p class="small" style="margin-top:5px">Не содержит ключей. Вызывает /api/demo/generate на backend.</p></div>
+              <div class="panel"><p class="card-title">Backend endpoint</p><p class="small" style="margin-top:5px">Хранит ANTHROPIC_API_KEY, вызывает Claude Haiku, возвращает JSON.</p></div>
+              <div class="panel"><p class="card-title">Рабочая версия</p><p class="small" style="margin-top:5px">Добавляет БД, очередь pg-boss, Dolphin, публикации и сбор метрик.</p></div>
             </div>
           </article>
         </section>
@@ -818,51 +816,74 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
+      const API = "https://app.ulalab.online/api/demo/generate";
+
       const stages = [
-        ["Черновик",     "описали продукт и выбрали каналы"],
-        ["Исследование", "собираем рынок, аудиторию и ограничения"],
-        ["Стратегия",    "формируем позиционирование, оффер и углы подачи"],
-        ["Проверка",     "человек принимает или возвращает стратегию"],
-        ["Контент",      "готовим тексты под разные площадки"],
-        ["Публикация",   "ставим материалы в очередь и расписание"],
-        ["Итог",         "смотрим метрики и решаем, продолжать ли запуск"],
+        ["Продукт",      "описан и каналы выбраны"],
+        ["Исследование", "AI анализирует рынок и аудиторию"],
+        ["Стратегия",    "AI формирует позиционирование и оффер"],
+        ["Проверка",     "человек принимает стратегию"],
+        ["Контент",      "AI пишет тексты под каждый канал"],
+        ["Публикация",   "материалы идут в очередь"],
+        ["Итог",         "метрики собраны, решение принято"],
       ];
 
-      const initialState = {
-        stage: 3,
-        activeContent: "Telegram",
-        productName: "ULA Morta",
-        approved: new Set(["VK"]),
-        channels: [
-          ["VK",       true,  "готов к публикации"],
-          ["Telegram", true,  "бот подключен"],
-          ["OK",       true,  "публикация через bridge"],
-          ["Dzen",     false, "отложено до следующего этапа"],
-        ],
-      };
+      const nextLabels = [
+        "Запустить исследование →",
+        "Сформировать стратегию →",
+        "Перейти к проверке →",
+        "Начать генерацию контента →",
+        "Поставить в публикацию →",
+        "Посмотреть результаты →",
+        "Начать новый запуск",
+      ];
 
-      const content = {
-        VK: "Запускаем ULA Morta в тестовом формате.\n\nКоротко рассказываем, для кого продукт, какую задачу закрывает и почему стоит перейти к подробному описанию.\n\nФормат: спокойный пост для VK с понятным CTA.",
-        Telegram: "ULA Morta выходит в тестовый запуск.\n\nЧто внутри:\n— понятный сценарий использования\n— короткий оффер\n— один следующий шаг\n\nTelegram-формат: быстро объяснить суть и не перегружать деталями.",
-        OK: "Новый продукт для аккуратного запуска: ULA Morta. Рассказываем простым языком, кому он подойдет, зачем нужен и что можно сделать следующим шагом.",
-        Dzen: "Большая статья для Dzen будет включена позже, когда канал перейдет из отложенного режима в активный.",
-      };
+      const nextScreens = ["research","strategy","overview","content","calendar","decision","product"];
+
+      const researchSteps = [
+        "Анализирую рынок...",
+        "Ищу аудиторию и паттерны спроса...",
+        "Изучаю конкурентов...",
+        "Формирую инсайты...",
+      ];
+
+      const strategySteps = [
+        "Строю позиционирование...",
+        "Формулирую оффер...",
+        "Адаптирую углы по каналам...",
+      ];
+
+      const initialChannels = [
+        ["VK", true, "готов к публикации"],
+        ["Telegram", true, "бот подключен"],
+        ["OK", true, "публикация через bridge"],
+        ["Dzen", false, "отложено"],
+      ];
 
       const state = {
-        ...initialState,
-        approved: new Set(initialState.approved),
-        channels: initialState.channels.map(i => [...i]),
+        stage: 0,
+        productName: "Launch Engine",
+        description: "Инструмент для автономного запуска продуктов в несколько каналов. Исследует рынок, формирует стратегию, генерирует контент и принимает решение по метрикам — всё без ручного труда маркетолога.",
+        channels: initialChannels.map(c => [...c]),
+        activeContent: "Telegram",
+        approved: new Set(),
+        generatedContent: {},
+        aiStepsCount: 0,
+        researchDone: false,
+        strategyDone: false,
       };
 
       const screens    = document.querySelectorAll(".screen");
       const navButtons = document.querySelectorAll(".nav-button");
       const toast      = document.querySelector("#toast");
+      const nextBtn    = document.querySelector("#nextStep");
+      const nextLabel  = document.querySelector("#nextStepLabel");
 
       function showToast(msg) {
         toast.textContent = msg;
         toast.classList.add("show");
         clearTimeout(showToast._t);
-        showToast._t = setTimeout(() => toast.classList.remove("show"), 2000);
+        showToast._t = setTimeout(() => toast.classList.remove("show"), 2200);
       }
 
       function showScreen(name) {
@@ -870,7 +891,155 @@
         navButtons.forEach(b => b.classList.toggle("active", b.dataset.screen === name));
       }
 
+      function updateNextBtn() {
+        nextLabel.textContent = nextLabels[state.stage] ?? "Готово";
+        nextBtn.disabled = false;
+      }
+
+      /* ── Cycle status text during AI call ── */
+      function cycleStatus(elId, steps, intervalMs) {
+        let i = 0;
+        document.querySelector(`#${elId}`).textContent = steps[0];
+        return setInterval(() => {
+          i = (i + 1) % steps.length;
+          document.querySelector(`#${elId}`).textContent = steps[i];
+        }, intervalMs);
+      }
+
+      /* ── API call ── */
+      async function generate(type, extra = {}) {
+        const body = {
+          type,
+          productName: state.productName,
+          description: state.description,
+          channels: state.channels.filter(c => c[1]).map(c => c[0]),
+          ...extra,
+        };
+        const res = await fetch(API, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        if (!res.ok) throw new Error(`API error ${res.status}`);
+        const json = await res.json();
+        return json.result;
+      }
+
+      /* ── Research ── */
+      async function runResearch() {
+        document.querySelector("#researchLoader").style.display = "";
+        document.querySelector("#researchResult").classList.remove("visible");
+        document.querySelector("#researchActions").style.display = "none";
+
+        const timer = cycleStatus("researchStatus", researchSteps, 1800);
+
+        try {
+          const r = await generate("research");
+          clearInterval(timer);
+
+          document.querySelector("#r-audience").textContent    = r.audience?.text    ?? "—";
+          document.querySelector("#r-market").textContent      = r.market?.text      ?? "—";
+          document.querySelector("#r-competitors").textContent = r.competitors?.text ?? "—";
+          document.querySelector("#r-insight").textContent     = r.insight?.text     ?? "—";
+
+          document.querySelector("#researchLoader").style.display = "none";
+          document.querySelector("#researchResult").classList.add("visible");
+          document.querySelector("#researchActions").style.display = "";
+
+          state.researchDone = true;
+          state.aiStepsCount++;
+          document.querySelector("#aiSteps").textContent = state.aiStepsCount;
+          state.stage = 1;
+          updateNextBtn();
+          renderProgress();
+          renderQueue();
+        } catch (err) {
+          clearInterval(timer);
+          document.querySelector("#researchLoader").style.display = "none";
+          showToast("Ошибка AI: " + err.message);
+        }
+      }
+
+      /* ── Strategy ── */
+      async function runStrategy() {
+        document.querySelector("#strategyLoader").style.display = "";
+        document.querySelector("#strategyResult").classList.remove("visible");
+        document.querySelector("#strategyActions").style.display = "none";
+
+        const timer = cycleStatus("strategyStatus", strategySteps, 1800);
+
+        try {
+          const r = await generate("strategy");
+          clearInterval(timer);
+
+          document.querySelector("#s-positioning").textContent = r.positioning ?? "—";
+          document.querySelector("#s-offer").textContent       = r.offer       ?? "—";
+
+          const angles = r.angles ?? [];
+          document.querySelector("#s-angles").innerHTML = angles.map(a =>
+            `<div class="angle-row">
+              <span class="angle-channel">${a.channel}</span>
+              <span class="angle-text">${a.angle}</span>
+            </div>`
+          ).join("");
+
+          document.querySelector("#strategyLoader").style.display = "none";
+          document.querySelector("#strategyResult").classList.add("visible");
+          document.querySelector("#strategyActions").style.display = "";
+
+          state.strategyDone = true;
+          state.aiStepsCount++;
+          document.querySelector("#aiSteps").textContent = state.aiStepsCount;
+          state.stage = 2;
+          updateNextBtn();
+          renderProgress();
+          renderQueue();
+        } catch (err) {
+          clearInterval(timer);
+          document.querySelector("#strategyLoader").style.display = "none";
+          showToast("Ошибка AI: " + err.message);
+        }
+      }
+
+      /* ── Content ── */
+      async function loadContent(channel) {
+        if (state.generatedContent[channel]) {
+          document.querySelector("#contentPreview").textContent = state.generatedContent[channel];
+          document.querySelector("#contentPreview").style.display = "";
+          document.querySelector("#contentLoader").style.display = "none";
+          document.querySelector("#contentActions").style.display = "";
+          return;
+        }
+
+        document.querySelector("#contentLoader").style.display = "";
+        document.querySelector("#contentPreview").style.display = "none";
+        document.querySelector("#contentActions").style.display = "none";
+        document.querySelector("#contentStatus").textContent = `Пишу текст для ${channel}...`;
+
+        try {
+          const r = await generate("content", { channel });
+          state.generatedContent[channel] = r.text ?? "—";
+          state.aiStepsCount++;
+          document.querySelector("#aiSteps").textContent = state.aiStepsCount;
+
+          document.querySelector("#contentLoader").style.display = "none";
+          document.querySelector("#contentPreview").textContent = state.generatedContent[channel];
+          document.querySelector("#contentPreview").style.display = "";
+          document.querySelector("#contentActions").style.display = "";
+          renderContentTabs();
+        } catch (err) {
+          document.querySelector("#contentLoader").style.display = "none";
+          document.querySelector("#contentPreview").textContent = "Ошибка при генерации: " + err.message;
+          document.querySelector("#contentPreview").style.display = "";
+          document.querySelector("#contentActions").style.display = "";
+        }
+      }
+
+      /* ── Renders ── */
       function renderProgress() {
+        document.querySelector("#progressTitle").textContent =
+          state.productName || "Введите продукт и начните";
+
         document.querySelector("#progress").innerHTML = stages.map(([title, copy], i) => {
           const cls    = i < state.stage ? "done" : i === state.stage ? "active" : "";
           const status = i < state.stage ? "готово" : i === state.stage ? "сейчас" : "ожидает";
@@ -885,14 +1054,14 @@
 
       function renderQueue() {
         const items = [
-          ["Принять стратегию",       state.stage >= 3 ? "Готово"    : "Ждет",    "amber"],
-          ["Проверить Telegram-текст", state.approved.has("Telegram") ? "Принято" : "Ревью", "blue"],
-          ["Проверить OK-публикацию",  state.stage >= 5 ? "В очереди" : "План",   ""],
-          ["Подключить Dzen",          "Позже", ""],
+          ["Принять стратегию",       state.stage >= 3 ? "Принято" : state.strategyDone ? "Ждёт" : "Ожидает AI", state.stage >= 3 ? "green" : state.strategyDone ? "amber" : ""],
+          ["Проверить контент",       state.approved.size > 0 ? `${state.approved.size} принято` : "На ревью", state.approved.size > 0 ? "green" : "blue"],
+          ["Решение T+48h",           state.stage >= 6 ? "Принято" : "Авто", state.stage >= 6 ? "green" : ""],
+          ["Масштабирование",         "Следующий шаг", ""],
         ];
         document.querySelector("#queue").innerHTML = items.map(([title, status, color]) =>
           `<div class="queue-item">
-            <div><p class="queue-title">${title}</p><p class="small" style="margin-top:3px">Требует подтверждения от человека.</p></div>
+            <div><p class="queue-title">${title}</p><p class="small" style="margin-top:3px">Контрольная точка для оператора.</p></div>
             <span class="badge ${color}">${status}</span>
           </div>`
         ).join("");
@@ -914,10 +1083,10 @@
       }
 
       function renderContentTabs() {
-        document.querySelector("#contentTabs").innerHTML = Object.keys(content).map(name =>
+        const active = state.channels.filter(c => c[1]).map(c => c[0]);
+        document.querySelector("#contentTabs").innerHTML = active.map(name =>
           `<button class="tab ${state.activeContent === name ? "active" : ""}" data-content="${name}">${name}${state.approved.has(name) ? " ✓" : ""}</button>`
         ).join("");
-        document.querySelector("#contentPreview").textContent = content[state.activeContent];
       }
 
       function renderCalendar() {
@@ -939,36 +1108,63 @@
         ).join("");
       }
 
-      function renderActivity() {
-        const rows = [
-          ["09:40", "Стратегия принята оператором."],
-          ["09:44", "Сгенерирован текст для Telegram."],
-          ["09:47", "Публикация VK поставлена в очередь."],
-          ["10:10", "Сбор метрик запланирован после публикации."],
+      function renderDecision() {
+        const bars = [
+          { channel: "Telegram", pct: 82, stat: "CTR 4.8%",  color: "green" },
+          { channel: "VK",       pct: 65, stat: "CTR 3.1%",  color: "" },
+          { channel: "OK",       pct: 40, stat: "CTR 1.9%",  color: "amber" },
+          { channel: "Dzen",     pct: 18, stat: "CTR 0.8%",  color: "amber" },
         ];
-        document.querySelector("#activity").innerHTML = rows.map(([time, text]) =>
+
+        document.querySelector("#decisionChart").innerHTML = bars.map(b =>
+          `<div class="bar-row">
+            <span class="bar-label">${b.channel}</span>
+            <div class="bar-track"><div class="bar-fill ${b.color}" data-pct="${b.pct}"></div></div>
+            <span class="bar-stat">${b.stat}</span>
+          </div>`
+        ).join("");
+
+        document.querySelector("#decisionLog").innerHTML = [
+          ["T+0h",  "Публикации вышли в 4 канала."],
+          ["T+12h", "Telegram: 6.2k охват, CTR растёт."],
+          ["T+24h", "VK: 9.1k охват, стабильно."],
+          ["T+48h", "Система приняла решение: LIVE."],
+        ].map(([time, text]) =>
           `<div class="activity-row"><strong>${time}</strong><span>${text}</span></div>`
         ).join("");
-      }
 
-      function renderCounters() {
-        document.querySelector("#readyCount").textContent    = String(Object.keys(content).length - state.approved.size);
-        document.querySelector("#publishedCount").textContent = String(4 + state.stage);
-        document.querySelector("#errorCount").textContent    = state.stage >= 6 ? "0" : "2";
+        setTimeout(() => {
+          document.querySelectorAll(".bar-fill").forEach(el => {
+            el.style.width = el.dataset.pct + "%";
+          });
+        }, 120);
       }
 
       function renderAll() {
-        renderProgress(); renderQueue(); renderChannels();
-        renderContentTabs(); renderCalendar(); renderActivity(); renderCounters();
+        renderProgress();
+        renderQueue();
+        renderChannels();
+        renderContentTabs();
+        renderCalendar();
+        renderDecision();
       }
 
-      navButtons.forEach(b => b.addEventListener("click", () => showScreen(b.dataset.screen)));
+      /* ── Nav ── */
+      navButtons.forEach(b => b.addEventListener("click", () => {
+        const s = b.dataset.screen;
+        showScreen(s);
+        if (s === "content" && state.stage >= 3) {
+          loadContent(state.activeContent);
+        }
+      }));
 
       document.addEventListener("click", e => {
-        const st = e.target.closest("[data-screen-target]");
-        if (st) showScreen(st.dataset.screenTarget);
         const ct = e.target.closest("[data-content]");
-        if (ct) { state.activeContent = ct.dataset.content; renderContentTabs(); }
+        if (ct) {
+          state.activeContent = ct.dataset.content;
+          renderContentTabs();
+          loadContent(state.activeContent);
+        }
       });
 
       document.addEventListener("change", e => {
@@ -976,51 +1172,133 @@
         if (!cb) return;
         const i = Number(cb.dataset.channelIndex);
         state.channels[i][1] = cb.checked;
+        state.generatedContent = {};
         renderChannels();
+        renderContentTabs();
         showToast(`${state.channels[i][0]} ${cb.checked ? "включен" : "выключен"}`);
       });
 
-      document.querySelector("#nextStep").addEventListener("click", () => {
-        state.stage = Math.min(stages.length - 1, state.stage + 1);
-        renderAll();
-        showToast(`Этап: ${stages[state.stage][0]}`);
+      /* ── Next step ── */
+      nextBtn.addEventListener("click", async () => {
+        const target = nextScreens[state.stage];
+        showScreen(target);
+
+        if (state.stage === 0) {
+          await runResearch();
+        } else if (state.stage === 1) {
+          await runStrategy();
+        } else if (state.stage === 2) {
+          state.stage = 3;
+          updateNextBtn();
+          renderProgress();
+          renderQueue();
+          showToast("Стратегия принята — переходим к контенту");
+        } else if (state.stage === 3) {
+          state.stage = 4;
+          updateNextBtn();
+          renderProgress();
+          loadContent(state.activeContent);
+        } else if (state.stage === 4) {
+          state.stage = 5;
+          updateNextBtn();
+          renderProgress();
+          showToast("Материалы поставлены в расписание");
+        } else if (state.stage === 5) {
+          state.stage = 6;
+          updateNextBtn();
+          renderProgress();
+          renderDecision();
+          showToast("Решение T+48h: LIVE ✓");
+        } else {
+          state.stage = 0;
+          state.researchDone = false;
+          state.strategyDone = false;
+          state.approved = new Set();
+          state.generatedContent = {};
+          state.aiStepsCount = 0;
+          document.querySelector("#aiSteps").textContent = "0";
+          updateNextBtn();
+          renderAll();
+          showScreen("product");
+          showToast("Демо сброшено — можно начать заново");
+        }
       });
 
+      /* ── Actions ── */
       document.querySelector("#resetDemo").addEventListener("click", () => {
-        state.stage = initialState.stage;
-        state.activeContent = initialState.activeContent;
-        state.productName = initialState.productName;
-        state.approved = new Set(initialState.approved);
-        state.channels = initialState.channels.map(i => [...i]);
-        document.querySelector("#productName").value = state.productName;
+        state.stage = 0;
+        state.researchDone = false;
+        state.strategyDone = false;
+        state.approved = new Set();
+        state.generatedContent = {};
+        state.aiStepsCount = 0;
+        state.productName = document.querySelector("#productName").value || "Launch Engine";
+        document.querySelector("#aiSteps").textContent = "0";
+        updateNextBtn();
         renderAll();
+        showScreen("overview");
         showToast("Демо сброшено");
       });
 
       document.querySelector("#saveBrief").addEventListener("click", () => {
-        state.productName = document.querySelector("#productName").value.trim() || "Untitled";
-        document.querySelector("#productCount").textContent = "4";
-        showToast(`Сохранено: ${state.productName}`);
+        state.productName = document.querySelector("#productName").value.trim() || "Продукт";
+        state.description = document.querySelector("#productBrief").value.trim();
+        state.generatedContent = {};
+        state.researchDone = false;
+        state.strategyDone = false;
+        renderProgress();
+        showToast(`Сохранено: ${state.productName} — запустите исследование`);
+        showScreen("overview");
+      });
+
+      document.querySelector("#approveResearch").addEventListener("click", () => {
+        state.stage = Math.max(state.stage, 2);
+        updateNextBtn();
+        renderProgress();
+        showScreen("strategy");
+        runStrategy();
+      });
+
+      document.querySelector("#approveStrategy").addEventListener("click", () => {
+        state.stage = Math.max(state.stage, 3);
+        updateNextBtn();
+        renderProgress();
+        renderQueue();
+        showScreen("content");
+        loadContent(state.activeContent);
+        showToast("Стратегия принята");
+      });
+
+      document.querySelector("#regenStrategy").addEventListener("click", () => {
+        state.strategyDone = false;
+        runStrategy();
       });
 
       document.querySelector("#approveContent").addEventListener("click", () => {
         state.approved.add(state.activeContent);
-        renderAll();
+        state.stage = Math.max(state.stage, 4);
+        updateNextBtn();
+        renderContentTabs();
+        renderQueue();
         showToast(`${state.activeContent}: текст принят`);
       });
 
       document.querySelector("#regenerateContent").addEventListener("click", () => {
-        showToast("Текст обновлен в демо-режиме");
+        delete state.generatedContent[state.activeContent];
+        loadContent(state.activeContent);
       });
 
       document.querySelector("#scheduleContent").addEventListener("click", () => {
         state.stage = Math.max(state.stage, 5);
-        renderAll();
+        updateNextBtn();
+        renderProgress();
         showScreen("calendar");
         showToast(`${state.activeContent}: добавлено в расписание`);
       });
 
+      /* ── Init ── */
       renderAll();
+      updateNextBtn();
     </script>
   </body>
 </html>
