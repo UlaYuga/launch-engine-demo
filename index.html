@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Launch Engine Demo</title>
     <meta name="description" content="Кликабельное демо Launch Engine — реальный AI, без backend-секретов." />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2" />
+    <link rel="shortcut icon" type="image/svg+xml" href="./favicon.svg?v=2" />
     <style>
       :root {
         color-scheme: dark;
@@ -103,6 +105,23 @@
         box-shadow: 0 0 14px rgba(255,122,26,0.2);
         flex-shrink: 0;
       }
+
+      .engine-mark {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+
+      .engine-mark .engine-ring {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-dasharray: 8 4;
+      }
+
+      .engine-mark .engine-core { fill: currentColor; }
+      .engine-mark .engine-spark { fill: var(--blue); }
 
       .brand-title   { margin: 0; font-size: 13px; font-weight: 600; }
       .brand-subtitle { margin: 0; color: var(--muted); font-size: 11px; }
@@ -525,7 +544,13 @@
     <div class="app">
       <aside class="sidebar">
         <div class="brand">
-          <div class="brand-mark">LE</div>
+          <div class="brand-mark" aria-hidden="true">
+            <svg class="engine-mark" viewBox="0 0 24 24" role="img">
+              <path class="engine-ring" d="M12 3.5a8.5 8.5 0 1 1-7.4 4.3" />
+              <path class="engine-core" d="M10.7 7.3h4.1l-2.1 4h3.7l-5.1 5.8 1-4.2H8.6l2.1-5.6Z" />
+              <circle class="engine-spark" cx="6.2" cy="7.1" r="1.7" />
+            </svg>
+          </div>
           <div>
             <p class="brand-title">Launch Engine</p>
             <p class="brand-subtitle">Попробуй сам — без регистрации</p>
@@ -545,7 +570,7 @@
 
         <div class="sidebar-note">
           <p class="card-title">AI здесь настоящий</p>
-          <p class="small" style="margin-top:5px">Введи свой продукт — получишь реальное исследование и стратегию от Claude. Публикаций нет: это демо без backend-секретов.</p>
+          <p class="small" style="margin-top:5px">Введи свой продукт — получишь реальное исследование и стратегию от AI. Публикаций нет: это демо без backend-секретов.</p>
         </div>
       </aside>
 
@@ -587,7 +612,7 @@
               </div>
               <div class="guide-list">
                 <div class="guide-step"><span class="guide-index">1</span><div><p class="card-title">Впиши свой продукт</p><p class="small" style="margin-top:3px">Любой — B2B, приложение, сервис, физический товар.</p></div></div>
-                <div class="guide-step"><span class="guide-index">2</span><div><p class="card-title">Нажми «Следующий этап»</p><p class="small" style="margin-top:3px">Claude проведёт исследование и напишет стратегию под твой продукт.</p></div></div>
+                <div class="guide-step"><span class="guide-index">2</span><div><p class="card-title">Нажми «Следующий этап»</p><p class="small" style="margin-top:3px">DeepSeek проведёт исследование и напишет стратегию под твой продукт.</p></div></div>
                 <div class="guide-step"><span class="guide-index">3</span><div><p class="card-title">Загляни в «Решение T+48h»</p><p class="small" style="margin-top:3px">Так выглядит автоматический вердикт — без совещаний и ощущений.</p></div></div>
               </div>
             </aside>
@@ -736,7 +761,7 @@
             <div class="section-copy">
               <p class="eyebrow">Контент</p>
               <h2 class="section-title">Готовые посты для каждого канала</h2>
-              <p class="muted">Claude знает формат VK, Telegram и OK — и пишет по-разному для каждого. Не подошло — перегенерируй одним кликом.</p>
+              <p class="muted">DeepSeek знает формат VK, Telegram и OK — и пишет по-разному для каждого. Не подошло — перегенерируй одним кликом.</p>
             </div>
 
             <div class="content-tabs" id="contentTabs"></div>
@@ -810,7 +835,7 @@
             </div>
             <div class="three-grid grid">
               <div class="panel"><p class="card-title">Публичный интерфейс</p><p class="small" style="margin-top:5px">То, что ты видишь. Никаких ключей — только запросы к защищённому API.</p></div>
-              <div class="panel"><p class="card-title">Сервер</p><p class="small" style="margin-top:5px">Хранит все секреты, вызывает Claude, публикует в каналы, собирает метрики.</p></div>
+              <div class="panel"><p class="card-title">Сервер</p><p class="small" style="margin-top:5px">Хранит все секреты, вызывает DeepSeek, публикует в каналы, собирает метрики.</p></div>
               <div class="panel"><p class="card-title">Полная версия</p><p class="small" style="margin-top:5px">Реальные публикации в VK, Telegram, OK и Dzen. Метрики. Решение T+48h.</p></div>
             </div>
           </article>
