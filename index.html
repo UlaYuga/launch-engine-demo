@@ -662,6 +662,11 @@
               <h2 class="section-title" id="researchHeading">Что AI нашёл о твоём рынке</h2>
             </div>
 
+            <div id="researchEmpty" style="display:none;padding:32px;text-align:center;border:1px dashed rgba(180,210,255,0.15);border-radius:10px">
+              <p style="margin:0;font-size:15px;font-weight:600;color:var(--muted)">Исследование ещё не запущено</p>
+              <p style="margin:8px 0 0;font-size:13px;color:var(--soft)">Нажми «Запустить исследование →» сверху или зайди через «Продукт»</p>
+            </div>
+
             <div class="ai-loading" id="researchLoader" style="display:none">
               <div class="ai-pulse">
                 <div class="ai-spinner"></div>
@@ -926,7 +931,15 @@
       }
 
       /* ── Research ── */
+      function showResearchEmpty() {
+        document.querySelector("#researchEmpty").style.display = "";
+        document.querySelector("#researchLoader").style.display = "none";
+        document.querySelector("#researchResult").classList.remove("visible");
+        document.querySelector("#researchActions").style.display = "none";
+      }
+
       async function runResearch() {
+        document.querySelector("#researchEmpty").style.display = "none";
         document.querySelector("#researchLoader").style.display = "";
         document.querySelector("#researchResult").classList.remove("visible");
         document.querySelector("#researchActions").style.display = "none";
@@ -955,8 +968,8 @@
           renderQueue();
         } catch (err) {
           clearInterval(timer);
-          document.querySelector("#researchLoader").style.display = "none";
-          showToast("Ошибка AI: " + err.message);
+          showResearchEmpty();
+          showToast("Ошибка: сервер недоступен — задеплой backend и попробуй снова");
         }
       }
 
@@ -1153,9 +1166,8 @@
       navButtons.forEach(b => b.addEventListener("click", () => {
         const s = b.dataset.screen;
         showScreen(s);
-        if (s === "content" && state.stage >= 3) {
-          loadContent(state.activeContent);
-        }
+        if (s === "research" && !state.researchDone) showResearchEmpty();
+        if (s === "content" && state.stage >= 3) loadContent(state.activeContent);
       }));
 
       document.addEventListener("click", e => {
