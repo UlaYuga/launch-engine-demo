@@ -44,8 +44,8 @@
         margin: 0;
         min-height: 100vh;
         background:
-          linear-gradient(135deg, rgba(8, 13, 20, 0.98) 0%, rgba(16, 27, 41, 0.96) 44%, rgba(7, 11, 17, 1) 100%),
-          linear-gradient(180deg, #101827 0%, #070b11 100%);
+          linear-gradient(135deg, #060912 0%, #10233f 34%, #102b36 58%, #071018 100%),
+          linear-gradient(180deg, #111827 0%, #05070d 100%);
         color: var(--text);
         font-size: 13px;
         font-family:
@@ -173,8 +173,20 @@
       }
 
       .main {
+        position: relative;
         width: min(1120px, 100%);
         padding: 26px 32px 48px;
+      }
+
+      .main::before {
+        position: fixed;
+        inset: 0 0 0 220px;
+        z-index: -1;
+        pointer-events: none;
+        content: "";
+        background:
+          linear-gradient(125deg, rgba(37, 99, 235, 0.28) 0%, rgba(15, 118, 110, 0.18) 42%, rgba(249, 115, 22, 0.14) 72%, rgba(7, 11, 17, 0.72) 100%),
+          linear-gradient(180deg, rgba(10, 18, 30, 0.2), rgba(7, 11, 17, 0.86));
       }
 
       .overview-hero {
@@ -184,7 +196,7 @@
 
       .hero-card {
         background:
-          linear-gradient(135deg, rgba(23, 34, 49, 0.98), rgba(13, 20, 29, 0.98)),
+          linear-gradient(135deg, rgba(26, 43, 68, 0.96) 0%, rgba(12, 31, 41, 0.94) 55%, rgba(55, 32, 19, 0.9) 100%),
           var(--surface);
       }
 
@@ -680,6 +692,10 @@
 
         .main {
           padding: 22px 16px 40px;
+        }
+
+        .main::before {
+          inset: 0;
         }
 
         .topbar,
