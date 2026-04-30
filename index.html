@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Launch Engine V2 Demo</title>
+    <meta
+      name="description"
+      content="Кликабельное демо Launch Engine V2 без backend, ключей и внешних API."
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ea;
+        --surface: #fffdf9;
+        --surface-2: #ece8df;
+        --surface-3: #f8f6f1;
+        --text: #191814;
+        --muted: #67635b;
+        --soft: #918b80;
+        --line: rgba(25, 24, 20, 0.12);
+        --line-strong: rgba(25, 24, 20, 0.24);
+        --accent: #c75b12;
+        --accent-2: #0f766e;
+        --blue: #2563eb;
+        --green: #16803c;
+        --red: #b42318;
+        --amber: #b45309;
+        --radius: 8px;
+        --shadow: 0 18px 50px rgba(43, 37, 27, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--text);
+        font-family:
+          "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 248px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px 14px;
+        border-right: 1px solid var(--line);
+        background: #f8f4ed;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 10px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 8px;
+        background: #fde7c7;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .brand-title,
+      .section-title,
+      .card-title,
+      .metric-value,
+      .queue-title {
+        margin: 0;
+        font-weight: 600;
+        line-height: 1.25;
+      }
+
+      .brand-title {
+        font-size: 15px;
+      }
+
+      .brand-subtitle,
+      .muted,
+      .small {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .brand-subtitle,
+      .small {
+        font-size: 12px;
+      }
+
+      .nav {
+        display: grid;
+        gap: 4px;
+      }
+
+      .nav-button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 38px;
+        padding: 8px 10px;
+        border-radius: var(--radius);
+        background: transparent;
+        color: var(--muted);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .nav-button:hover,
+      .nav-button.active {
+        background: var(--surface-2);
+        color: var(--text);
+      }
+
+      .nav-icon {
+        display: grid;
+        width: 22px;
+        place-items: center;
+        color: currentColor;
+      }
+
+      .sidebar-note {
+        margin-top: auto;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+
+      .main {
+        width: min(1180px, 100%);
+        padding: 28px 36px 48px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 22px;
+      }
+
+      .eyebrow {
+        margin: 0 0 6px;
+        color: var(--soft);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.2;
+        font-weight: 650;
+      }
+
+      .topbar-copy {
+        display: grid;
+        gap: 8px;
+        max-width: 760px;
+      }
+
+      .toolbar,
+      .row,
+      .pill-row,
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-height: 36px;
+        padding: 8px 13px;
+        border-radius: 6px;
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--line-strong);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .button:hover {
+        background: var(--surface-3);
+      }
+
+      .button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      .button.dark {
+        background: var(--text);
+        border-color: var(--text);
+        color: white;
+      }
+
+      .button.ghost {
+        background: transparent;
+      }
+
+      .grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(4, minmax(150px, 1fr));
+      }
+
+      .work-grid {
+        grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.9fr);
+      }
+
+      .three-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card,
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+      }
+
+      .card {
+        padding: 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .panel {
+        padding: 14px;
+        background: var(--surface-3);
+      }
+
+      .section-title {
+        font-size: 19px;
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+
+      .section-copy {
+        display: grid;
+        gap: 6px;
+      }
+
+      .metric-value {
+        font-size: 28px;
+      }
+
+      .metric-label {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .badge.green {
+        background: #dff5e6;
+        color: var(--green);
+      }
+
+      .badge.amber {
+        background: #fff0d3;
+        color: var(--amber);
+      }
+
+      .badge.blue {
+        background: #e7efff;
+        color: var(--blue);
+      }
+
+      .badge.red {
+        background: #ffe5e0;
+        color: var(--red);
+      }
+
+      .progress {
+        display: grid;
+        gap: 10px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface-3);
+      }
+
+      .step.done {
+        border-color: rgba(22, 128, 60, 0.28);
+        background: #f2fbf5;
+      }
+
+      .step.active {
+        border-color: rgba(199, 91, 18, 0.34);
+        background: #fff6ea;
+      }
+
+      .dot {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .done .dot {
+        background: var(--green);
+        color: white;
+      }
+
+      .active .dot {
+        background: var(--accent);
+        color: white;
+      }
+
+      .step-title {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .step-copy {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .content-tabs {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .tab {
+        min-height: 34px;
+        padding: 7px 11px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-3);
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      .tab.active {
+        border-color: var(--line-strong);
+        background: var(--surface);
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .preview {
+        min-height: 230px;
+        margin: 0;
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: #fffdfa;
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.75;
+        white-space: pre-wrap;
+      }
+
+      .channel-card {
+        display: grid;
+        gap: 12px;
+      }
+
+      .channel-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .toggle {
+        position: relative;
+        display: inline-flex;
+        width: 42px;
+        height: 24px;
+        padding: 2px;
+        border-radius: 999px;
+        background: var(--surface-2);
+        cursor: pointer;
+      }
+
+      .toggle input {
+        position: absolute;
+        opacity: 0;
+      }
+
+      .toggle span {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: white;
+        box-shadow: 0 1px 5px rgba(20, 20, 20, 0.22);
+        transition: transform 160ms ease;
+      }
+
+      .toggle input:checked + span {
+        transform: translateX(18px);
+      }
+
+      .toggle:has(input:checked) {
+        background: var(--accent-2);
+      }
+
+      .queue-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .queue-item {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface-3);
+      }
+
+      .queue-title {
+        font-size: 14px;
+      }
+
+      .screen {
+        display: none;
+      }
+
+      .screen.active {
+        display: grid;
+        gap: 16px;
+      }
+
+      .input,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line-strong);
+        border-radius: 6px;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      .input {
+        height: 38px;
+        padding: 0 11px;
+      }
+
+      textarea {
+        min-height: 116px;
+        padding: 11px;
+        line-height: 1.6;
+        resize: vertical;
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .activity {
+        display: grid;
+        gap: 10px;
+      }
+
+      .activity-row {
+        display: grid;
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .toast {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        max-width: min(360px, calc(100vw - 48px));
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--text);
+        color: white;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition: opacity 160ms ease, transform 160ms ease;
+        font-size: 14px;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 980px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .nav {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .sidebar-note {
+          display: none;
+        }
+
+        .main {
+          padding: 22px 16px 40px;
+        }
+
+        .topbar,
+        .work-grid,
+        .three-grid,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar {
+          display: grid;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .nav {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .queue-item,
+        .step {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">LE</div>
+          <div>
+            <p class="brand-title">Launch Engine</p>
+            <p class="brand-subtitle">Clickable V2 demo</p>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Demo navigation">
+          <button class="nav-button active" data-screen="overview">
+            <span class="nav-icon">⌁</span>
+            <span>Overview</span>
+          </button>
+          <button class="nav-button" data-screen="product">
+            <span class="nav-icon">□</span>
+            <span>Product</span>
+          </button>
+          <button class="nav-button" data-screen="content">
+            <span class="nav-icon">✎</span>
+            <span>Content</span>
+          </button>
+          <button class="nav-button" data-screen="calendar">
+            <span class="nav-icon">◷</span>
+            <span>Calendar</span>
+          </button>
+          <button class="nav-button" data-screen="metrics">
+            <span class="nav-icon">▥</span>
+            <span>Metrics</span>
+          </button>
+          <button class="nav-button" data-screen="settings">
+            <span class="nav-icon">⚙</span>
+            <span>Settings</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <p class="card-title">Безопасный режим</p>
+          <p class="small">
+            Это статический демо-интерфейс. Здесь нет ключей, cookies, Anthropic API,
+            Replicate API, PostgreSQL или публикаций в реальные каналы.
+          </p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="topbar-copy">
+            <div>
+              <p class="eyebrow">Demo workspace</p>
+              <h1>Панель запуска продуктов</h1>
+            </div>
+            <p class="muted">
+              Люди могут пощелкать lifecycle, review queue, контент, календарь публикаций
+              и метрики. Все действия живут только в браузере.
+            </p>
+          </div>
+          <div class="toolbar">
+            <button class="button" id="resetDemo">Reset</button>
+            <button class="button primary" id="nextStep">Next stage</button>
+          </div>
+        </header>
+
+        <section class="screen active" id="overview">
+          <div class="summary-grid grid">
+            <article class="card">
+              <p class="eyebrow">Products</p>
+              <p class="metric-value" id="productCount">3</p>
+              <p class="metric-label">в демо-воркспейсе</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Ready</p>
+              <p class="metric-value" id="readyCount">1</p>
+              <p class="metric-label">контент ждет approval</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Published</p>
+              <p class="metric-value" id="publishedCount">8</p>
+              <p class="metric-label">постов за неделю</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Errors</p>
+              <p class="metric-value" id="errorCount">2</p>
+              <p class="metric-label">нужна ручная проверка</p>
+            </article>
+          </div>
+
+          <div class="work-grid grid">
+            <article class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Lifecycle</p>
+                <h2 class="section-title">ULA Morta launch</h2>
+                <p class="muted">
+                  Пример product-first flow: research, strategy, content, publications,
+                  метрики и decision в одной карточке.
+                </p>
+              </div>
+              <div class="progress" id="progress"></div>
+            </article>
+
+            <aside class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Review queue</p>
+                <h2 class="section-title">Операторские решения</h2>
+              </div>
+              <div class="queue-list" id="queue"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="product">
+          <div class="work-grid grid">
+            <article class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Product brief</p>
+                <h2 class="section-title">Создание product-card</h2>
+                <p class="muted">
+                  В реальном приложении это попадает в PostgreSQL и запускает pipeline через pg-boss.
+                  В демо форма обновляет карточку локально.
+                </p>
+              </div>
+              <div class="form-grid">
+                <label>
+                  <span class="label">Product name</span>
+                  <input class="input" id="productName" value="ULA Morta" />
+                </label>
+                <label>
+                  <span class="label">Brief</span>
+                  <textarea id="productBrief">Позиционирование и контент для нового продукта: быстрый запуск, четыре канала, ручное approval перед публикацией.</textarea>
+                </label>
+                <div class="actions">
+                  <button class="button primary" id="saveBrief">Save brief</button>
+                  <button class="button" data-screen-target="content">Open content</button>
+                </div>
+              </div>
+            </article>
+
+            <aside class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Channels</p>
+                <h2 class="section-title">План публикаций</h2>
+              </div>
+              <div class="grid" id="channels"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="screen" id="content">
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Content review</p>
+              <h2 class="section-title">Generated artifacts</h2>
+              <p class="muted">
+                Переключай каналы, смотри текст, отправляй в approval или schedule.
+              </p>
+            </div>
+            <div class="content-tabs" id="contentTabs"></div>
+            <pre class="preview" id="contentPreview"></pre>
+            <div class="actions">
+              <button class="button primary" id="approveContent">Approve selected</button>
+              <button class="button" id="regenerateContent">Regenerate</button>
+              <button class="button dark" id="scheduleContent">Schedule</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="screen" id="calendar">
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Publishing calendar</p>
+              <h2 class="section-title">Неделя публикаций</h2>
+            </div>
+            <div class="three-grid grid" id="calendarGrid"></div>
+          </article>
+        </section>
+
+        <section class="screen" id="metrics">
+          <div class="summary-grid grid">
+            <article class="card">
+              <p class="eyebrow">Reach</p>
+              <p class="metric-value">42.8k</p>
+              <p class="metric-label">суммарный охват</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">CTR</p>
+              <p class="metric-value">3.7%</p>
+              <p class="metric-label">по redirect links</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Decision</p>
+              <p class="metric-value">Live</p>
+              <p class="metric-label">после T+48h</p>
+            </article>
+            <article class="card">
+              <p class="eyebrow">Quality</p>
+              <p class="metric-value">91</p>
+              <p class="metric-label">self-eval score</p>
+            </article>
+          </div>
+
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Activity log</p>
+              <h2 class="section-title">Последние события</h2>
+            </div>
+            <div class="activity" id="activity"></div>
+          </article>
+        </section>
+
+        <section class="screen" id="settings">
+          <article class="card grid">
+            <div class="section-copy">
+              <p class="eyebrow">Runtime</p>
+              <h2 class="section-title">Что будет спрятано на backend</h2>
+              <p class="muted">
+                В настоящей версии секреты остаются только на сервере: DATABASE_URL,
+                ANTHROPIC_API_KEY, REPLICATE_API_TOKEN, S3 credentials, Dolphin access,
+                channel tokens и cookies.
+              </p>
+            </div>
+            <div class="three-grid grid">
+              <div class="panel">
+                <p class="card-title">Frontend</p>
+                <p class="small">Next.js UI, review screens, public hub, redirect links.</p>
+              </div>
+              <div class="panel">
+                <p class="card-title">Backend</p>
+                <p class="small">API routes, Drizzle, pg-boss, LLM router, integrations.</p>
+              </div>
+              <div class="panel">
+                <p class="card-title">Static demo</p>
+                <p class="small">GitHub Pages artifact без реальных данных и без ключей.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      const stages = [
+        ["Draft", "brief заполнен, каналы выбраны"],
+        ["Research", "agent собирает рынок и ограничения"],
+        ["Strategy", "позиционирование и оффер"],
+        ["Approval", "оператор проверяет стратегию"],
+        ["Content", "посты и hub article готовы"],
+        ["Publishing", "pg-boss отправляет публикации"],
+        ["Live", "метрики и decision через T+48h"],
+      ];
+
+      const initialState = {
+        stage: 3,
+        activeContent: "Telegram",
+        productName: "ULA Morta",
+        approved: new Set(["VK"]),
+        channels: [
+          ["VK", true, "API ready"],
+          ["Telegram", true, "Bot connected"],
+          ["OK", true, "Bridge mode"],
+          ["Dzen", false, "Deferred"],
+        ],
+      };
+
+      const content = {
+        VK:
+          "Запуск ULA Morta: короткая история продукта, четкий оффер и ссылка через redirect.\\n\\nФормат: пост для VK, без лишней воды, с CTA на hub article.",
+        Telegram:
+          "ULA Morta выходит в тестовый запуск.\\n\\nЧто внутри:\\n- короткий product brief\\n- понятный use case\\n- один next step\\n\\nЕсли хочется быстро проверить гипотезу, это первый пост в цепочке.",
+        OK:
+          "Новый продукт для аккуратного запуска: ULA Morta. Рассказываем простым языком, зачем он нужен, кому подойдет и что делать дальше.",
+        Dzen:
+          "Большая статья для Dzen будет включена позже, когда канал перейдет из deferred в active.",
+      };
+
+      const state = {
+        ...initialState,
+        approved: new Set(initialState.approved),
+        channels: initialState.channels.map((item) => [...item]),
+      };
+
+      const screens = document.querySelectorAll(".screen");
+      const navButtons = document.querySelectorAll(".nav-button");
+      const toast = document.querySelector("#toast");
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(showToast.timeout);
+        showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2200);
+      }
+
+      function showScreen(name) {
+        screens.forEach((screen) => screen.classList.toggle("active", screen.id === name));
+        navButtons.forEach((button) =>
+          button.classList.toggle("active", button.dataset.screen === name),
+        );
+      }
+
+      function renderProgress() {
+        const progress = document.querySelector("#progress");
+        progress.innerHTML = stages
+          .map(([title, copy], index) => {
+            const cls = index < state.stage ? "done" : index === state.stage ? "active" : "";
+            const status =
+              index < state.stage ? "done" : index === state.stage ? "current" : "waiting";
+            return `<div class="step ${cls}">
+              <div class="dot">${index < state.stage ? "✓" : index + 1}</div>
+              <div>
+                <p class="step-title">${title}</p>
+                <p class="step-copy">${copy}</p>
+              </div>
+              <span class="badge ${index < state.stage ? "green" : index === state.stage ? "amber" : ""}">${status}</span>
+            </div>`;
+          })
+          .join("");
+      }
+
+      function renderQueue() {
+        const items = [
+          ["Strategy approval", state.stage >= 3 ? "Ready" : "Waiting", "amber"],
+          ["Telegram content", state.approved.has("Telegram") ? "Approved" : "Review", "blue"],
+          ["OK bridge smoke", state.stage >= 5 ? "Queued" : "Pending", ""],
+          ["Dzen unlock", "Deferred", ""],
+        ];
+        document.querySelector("#queue").innerHTML = items
+          .map(
+            ([title, status, color]) => `<div class="queue-item">
+              <div>
+                <p class="queue-title">${title}</p>
+                <p class="small">Оператор может открыть задачу и принять решение.</p>
+              </div>
+              <span class="badge ${color}">${status}</span>
+            </div>`,
+          )
+          .join("");
+      }
+
+      function renderChannels() {
+        document.querySelector("#channels").innerHTML = state.channels
+          .map(
+            ([name, enabled, status], index) => `<div class="panel channel-card">
+              <div class="channel-head">
+                <div>
+                  <p class="card-title">${name}</p>
+                  <p class="small">${status}</p>
+                </div>
+                <label class="toggle" aria-label="${name}">
+                  <input type="checkbox" data-channel-index="${index}" ${enabled ? "checked" : ""} />
+                  <span></span>
+                </label>
+              </div>
+              <span class="badge ${enabled ? "green" : ""}">${enabled ? "enabled" : "off"}</span>
+            </div>`,
+          )
+          .join("");
+      }
+
+      function renderContentTabs() {
+        document.querySelector("#contentTabs").innerHTML = Object.keys(content)
+          .map(
+            (name) => `<button class="tab ${state.activeContent === name ? "active" : ""}" data-content="${name}">
+              ${name}${state.approved.has(name) ? " ✓" : ""}
+            </button>`,
+          )
+          .join("");
+        document.querySelector("#contentPreview").textContent = content[state.activeContent];
+      }
+
+      function renderCalendar() {
+        const items = [
+          ["Сегодня", "VK post", "19:00", "green"],
+          ["Завтра", "Telegram post", "12:30", "blue"],
+          ["Пятница", "OK bridge", "18:10", "amber"],
+          ["Суббота", "Hub article", "10:00", ""],
+          ["T+48h", "Decision run", "auto", "green"],
+          ["Next week", "Iteration plan", "draft", ""],
+        ];
+        document.querySelector("#calendarGrid").innerHTML = items
+          .map(
+            ([day, title, time, color]) => `<div class="panel">
+              <p class="eyebrow">${day}</p>
+              <p class="card-title">${title}</p>
+              <p class="small">${time}</p>
+              <span class="badge ${color}">${color ? "scheduled" : "planned"}</span>
+            </div>`,
+          )
+          .join("");
+      }
+
+      function renderActivity() {
+        const rows = [
+          ["09:40", "Strategy artifact approved by operator."],
+          ["09:44", "Telegram content generated with Haiku route."],
+          ["09:47", "VK publication queued through pg-boss."],
+          ["10:10", "Metrics aggregation scheduled for published posts."],
+        ];
+        document.querySelector("#activity").innerHTML = rows
+          .map(
+            ([time, text]) => `<div class="activity-row">
+              <strong>${time}</strong>
+              <span>${text}</span>
+            </div>`,
+          )
+          .join("");
+      }
+
+      function renderCounters() {
+        document.querySelector("#readyCount").textContent = String(
+          Object.keys(content).length - state.approved.size,
+        );
+        document.querySelector("#publishedCount").textContent = String(4 + state.stage);
+        document.querySelector("#errorCount").textContent = state.stage >= 6 ? "0" : "2";
+      }
+
+      function renderAll() {
+        renderProgress();
+        renderQueue();
+        renderChannels();
+        renderContentTabs();
+        renderCalendar();
+        renderActivity();
+        renderCounters();
+      }
+
+      navButtons.forEach((button) => {
+        button.addEventListener("click", () => showScreen(button.dataset.screen));
+      });
+
+      document.addEventListener("click", (event) => {
+        const screenTarget = event.target.closest("[data-screen-target]");
+        if (screenTarget) {
+          showScreen(screenTarget.dataset.screenTarget);
+        }
+
+        const contentTarget = event.target.closest("[data-content]");
+        if (contentTarget) {
+          state.activeContent = contentTarget.dataset.content;
+          renderContentTabs();
+        }
+      });
+
+      document.addEventListener("change", (event) => {
+        const checkbox = event.target.closest("[data-channel-index]");
+        if (!checkbox) return;
+        const index = Number(checkbox.dataset.channelIndex);
+        state.channels[index][1] = checkbox.checked;
+        renderChannels();
+        showToast(`${state.channels[index][0]} ${checkbox.checked ? "enabled" : "disabled"}`);
+      });
+
+      document.querySelector("#nextStep").addEventListener("click", () => {
+        state.stage = Math.min(stages.length - 1, state.stage + 1);
+        renderAll();
+        showToast(`Stage: ${stages[state.stage][0]}`);
+      });
+
+      document.querySelector("#resetDemo").addEventListener("click", () => {
+        state.stage = initialState.stage;
+        state.activeContent = initialState.activeContent;
+        state.productName = initialState.productName;
+        state.approved = new Set(initialState.approved);
+        state.channels = initialState.channels.map((item) => [...item]);
+        document.querySelector("#productName").value = state.productName;
+        renderAll();
+        showToast("Demo reset");
+      });
+
+      document.querySelector("#saveBrief").addEventListener("click", () => {
+        state.productName = document.querySelector("#productName").value.trim() || "Untitled";
+        document.querySelector("#productCount").textContent = "4";
+        showToast(`Saved: ${state.productName}`);
+      });
+
+      document.querySelector("#approveContent").addEventListener("click", () => {
+        state.approved.add(state.activeContent);
+        renderAll();
+        showToast(`${state.activeContent} approved`);
+      });
+
+      document.querySelector("#regenerateContent").addEventListener("click", () => {
+        showToast("Mock regeneration complete");
+      });
+
+      document.querySelector("#scheduleContent").addEventListener("click", () => {
+        state.stage = Math.max(state.stage, 5);
+        renderAll();
+        showScreen("calendar");
+        showToast(`${state.activeContent} scheduled`);
+      });
+
+      renderAll();
+    </script>
+  </body>
+</html>
