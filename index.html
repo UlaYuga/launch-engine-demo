@@ -6,77 +6,66 @@
     <title>Launch Engine Demo</title>
     <meta
       name="description"
-      content="Публичное кликабельное демо Launch Engine: темная панель запуска продуктов без backend, ключей и внешних API."
+      content="Публичное кликабельное демо Launch Engine: панель запуска продуктов без backend, ключей и внешних API."
     />
     <style>
       :root {
         color-scheme: dark;
-        --bg: #070b11;
-        --sidebar: #0b1119;
-        --surface: #111923;
-        --surface-2: #172231;
-        --surface-3: #0d141d;
-        --surface-4: #1d2a3b;
-        --text: #edf4ff;
-        --muted: #a2afbf;
-        --soft: #6f7f91;
-        --line: rgba(237, 244, 255, 0.1);
-        --line-strong: rgba(237, 244, 255, 0.2);
+        --bg: #080c14;
+        --sidebar: #090d16;
+        --surface: #0f1520;
+        --surface-2: #141c2a;
+        --surface-3: #0c1119;
+        --surface-4: #192334;
+        --text: #e8effa;
+        --muted: #8a9bb0;
+        --soft: #566070;
+        --line: rgba(232, 239, 250, 0.08);
+        --line-strong: rgba(232, 239, 250, 0.14);
         --accent: #f97316;
-        --accent-2: #22c55e;
-        --blue: #60a5fa;
+        --accent-dim: rgba(249, 115, 22, 0.15);
+        --blue: #6aacf5;
+        --blue-dim: rgba(106, 172, 245, 0.12);
         --green: #4ade80;
+        --green-dim: rgba(74, 222, 128, 0.12);
         --red: #fb7185;
         --amber: #fbbf24;
-        --radius: 8px;
-        --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+        --amber-dim: rgba(251, 191, 36, 0.12);
+        --radius: 10px;
+        --shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
 
       body {
         margin: 0;
         min-height: 100vh;
-        background:
-          linear-gradient(135deg, #060912 0%, #10233f 34%, #102b36 58%, #071018 100%),
-          linear-gradient(180deg, #111827 0%, #05070d 100%);
+        background: #080c14;
         color: var(--text);
         font-size: 13px;
-        font-family:
-          "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       }
 
-      button,
-      input,
-      textarea,
-      select {
-        font: inherit;
-      }
+      button, input, textarea, select { font: inherit; }
+      button { border: 0; }
 
-      button {
-        border: 0;
-      }
-
+      /* ── Layout ── */
       .app {
         display: grid;
-        grid-template-columns: 220px minmax(0, 1fr);
+        grid-template-columns: 212px minmax(0, 1fr);
         min-height: 100vh;
       }
 
+      /* ── Sidebar ── */
       .sidebar {
         position: sticky;
         top: 0;
         height: 100vh;
         display: flex;
         flex-direction: column;
-        gap: 14px;
-        padding: 16px 12px;
+        gap: 12px;
+        padding: 16px 10px;
         border-right: 1px solid var(--line);
         background: var(--sidebar);
       }
@@ -85,215 +74,101 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 6px 8px 16px;
+        padding: 6px 8px 14px;
         border-bottom: 1px solid var(--line);
       }
 
       .brand-mark {
         display: grid;
-        width: 34px;
-        height: 34px;
+        width: 32px;
+        height: 32px;
         place-items: center;
         border-radius: 8px;
-        background: rgba(249, 115, 22, 0.18);
-        color: #fed7aa;
+        background: var(--accent-dim);
+        color: var(--accent);
         font-weight: 700;
+        font-size: 12px;
       }
 
-      .brand-title,
-      .section-title,
-      .card-title,
-      .metric-value,
-      .queue-title {
-        margin: 0;
-        font-weight: 600;
-        line-height: 1.25;
-      }
+      .brand-title { margin: 0; font-size: 13px; font-weight: 600; line-height: 1.25; }
+      .brand-subtitle { margin: 0; color: var(--muted); font-size: 11px; }
 
-      .brand-title {
-        font-size: 14px;
-      }
-
-      .brand-subtitle,
-      .muted,
-      .small {
-        margin: 0;
-        color: var(--muted);
-        line-height: 1.55;
-      }
-
-      .brand-subtitle,
-      .small {
-        font-size: 11px;
-      }
-
-      .muted {
-        font-size: 13px;
-      }
-
-      .nav {
-        display: grid;
-        gap: 4px;
-      }
+      .nav { display: grid; gap: 2px; }
 
       .nav-button {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 9px;
         width: 100%;
         min-height: 34px;
-        padding: 7px 9px;
-        border-radius: var(--radius);
+        padding: 7px 10px;
+        border-radius: 7px;
         background: transparent;
         color: var(--muted);
         font-size: 12.5px;
         text-align: left;
         cursor: pointer;
+        transition: background 120ms, color 120ms;
       }
 
-      .nav-button:hover,
-      .nav-button.active {
-        background: var(--surface-2);
-        color: var(--text);
-      }
+      .nav-button:hover { background: var(--surface-2); color: var(--text); }
+      .nav-button.active { background: var(--surface-2); color: var(--text); }
 
       .nav-icon {
         display: grid;
-        width: 22px;
+        width: 20px;
         place-items: center;
-        color: currentColor;
+        opacity: 0.7;
       }
 
       .sidebar-note {
         margin-top: auto;
-        padding: 10px;
+        padding: 10px 11px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
         background: var(--surface);
       }
 
+      /* ── Main area ── */
       .main {
         position: relative;
-        width: min(1120px, 100%);
-        padding: 26px 32px 48px;
-      }
-
-      .main::before {
-        position: fixed;
-        inset: 0 0 0 220px;
-        z-index: -1;
-        pointer-events: none;
-        content: "";
+        padding: 28px 32px 52px;
+        /* subtle gradient overlay — single direction, no color chaos */
         background:
-          linear-gradient(125deg, rgba(37, 99, 235, 0.28) 0%, rgba(15, 118, 110, 0.18) 42%, rgba(249, 115, 22, 0.14) 72%, rgba(7, 11, 17, 0.72) 100%),
-          linear-gradient(180deg, rgba(10, 18, 30, 0.2), rgba(7, 11, 17, 0.86));
+          radial-gradient(ellipse 80% 50% at 60% -10%, rgba(37, 90, 200, 0.12) 0%, transparent 70%),
+          radial-gradient(ellipse 60% 40% at 100% 80%, rgba(20, 60, 110, 0.1) 0%, transparent 70%),
+          #080c14;
       }
 
-      .overview-hero {
-        grid-template-columns: minmax(0, 1fr) 300px;
-        align-items: stretch;
-      }
-
-      .hero-card {
-        background:
-          linear-gradient(135deg, rgba(26, 43, 68, 0.96) 0%, rgba(12, 31, 41, 0.94) 55%, rgba(55, 32, 19, 0.9) 100%),
-          var(--surface);
-      }
-
-      .hero-title {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 650;
-        line-height: 1.25;
-      }
-
-      .hero-copy {
-        display: grid;
-        gap: 8px;
-        max-width: 720px;
-      }
-
-      .feature-row {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
-      }
-
-      .feature-pill {
-        display: grid;
-        gap: 3px;
-        padding: 11px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: rgba(7, 11, 17, 0.28);
-      }
-
-      .guide-list {
-        display: grid;
-        gap: 8px;
-      }
-
-      .guide-step {
-        display: grid;
-        grid-template-columns: 26px minmax(0, 1fr);
-        gap: 9px;
-        align-items: start;
-        padding: 10px;
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        background: var(--surface-3);
-      }
-
-      .guide-index {
-        display: grid;
-        width: 24px;
-        height: 24px;
-        place-items: center;
-        border-radius: 50%;
-        background: rgba(96, 165, 250, 0.16);
-        color: var(--blue);
-        font-size: 12px;
-        font-weight: 800;
-      }
-
+      /* ── Topbar ── */
       .topbar {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 18px;
-        margin-bottom: 20px;
+        margin-bottom: 22px;
       }
 
+      .topbar-copy { display: grid; gap: 6px; }
+
       .eyebrow {
-        margin: 0 0 6px;
+        margin: 0 0 5px;
         color: var(--soft);
         font-size: 10px;
         font-weight: 700;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.09em;
         text-transform: uppercase;
       }
 
       h1 {
         margin: 0;
-        font-size: 22px;
+        font-size: 21px;
         line-height: 1.2;
         font-weight: 650;
       }
 
-      .topbar-copy {
-        display: grid;
-        gap: 7px;
-        max-width: 700px;
-      }
-
-      .topbar-copy > .muted {
-        max-width: 650px;
-      }
-
-      .toolbar,
-      .row,
-      .pill-row,
-      .actions {
+      /* ── Toolbar ── */
+      .toolbar, .row, .pill-row, .actions {
         display: flex;
         align-items: center;
         gap: 8px;
@@ -305,99 +180,121 @@
         align-items: center;
         justify-content: center;
         gap: 7px;
-        min-height: 36px;
-        padding: 8px 12px;
-        border-radius: 6px;
+        min-height: 34px;
+        padding: 7px 14px;
+        border-radius: 7px;
         background: var(--surface-2);
         color: var(--text);
         border: 1px solid var(--line-strong);
         cursor: pointer;
         font-size: 12.5px;
         font-weight: 600;
+        transition: background 120ms;
       }
 
-      .button:hover {
-        background: var(--surface-3);
-      }
+      .button:hover { background: var(--surface-4); }
+      .button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+      .button.primary:hover { background: #ea6a0e; }
+      .button.dark { background: #dde8f5; border-color: #dde8f5; color: #0d1520; }
+      .button.ghost { background: transparent; }
 
-      .button.primary {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: white;
-      }
+      /* ── Grid system ── */
+      .grid { display: grid; gap: 14px; }
+      .summary-grid { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
+      .work-grid { grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr); }
+      .three-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .overview-hero { grid-template-columns: minmax(0, 1fr) 290px; align-items: stretch; }
 
-      .button.dark {
-        background: #edf4ff;
-        border-color: #edf4ff;
-        color: #101722;
-      }
-
-      .button.ghost {
-        background: transparent;
-      }
-
-      .grid {
-        display: grid;
-        gap: 14px;
-      }
-
-      .summary-grid {
-        grid-template-columns: repeat(4, minmax(150px, 1fr));
-      }
-
-      .work-grid {
-        grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.9fr);
-      }
-
-      .three-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .card,
-      .panel {
+      /* ── Cards ── */
+      .card, .panel {
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: var(--surface);
       }
 
       .card {
-        padding: 16px;
+        padding: 18px;
+        background: var(--surface);
         box-shadow: var(--shadow);
       }
 
       .panel {
-        padding: 12px;
+        padding: 12px 14px;
         background: var(--surface-3);
       }
 
-      .section-title {
-        font-size: 16px;
+      /* Hero card: very subtle blue tint, no orange */
+      .hero-card {
+        background:
+          linear-gradient(135deg, rgba(18, 35, 65, 0.95) 0%, rgba(10, 20, 38, 0.95) 100%),
+          var(--surface);
+        border-color: rgba(106, 172, 245, 0.12);
       }
 
-      .card-title {
-        font-size: 13px;
+      /* ── Typography ── */
+      .section-title, .card-title, .metric-value, .queue-title, .brand-title, .step-title {
+        margin: 0;
+        font-weight: 600;
+        line-height: 1.25;
       }
 
-      .section-copy {
+      .section-title { font-size: 16px; }
+      .hero-title { margin: 0; font-size: 17px; font-weight: 650; line-height: 1.3; }
+      .card-title { font-size: 13px; }
+      .metric-value { font-size: 24px; font-weight: 700; }
+      .metric-label { margin: 5px 0 0; color: var(--muted); font-size: 11.5px; }
+      .section-copy { display: grid; gap: 5px; }
+
+      .muted { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+      .small { margin: 0; color: var(--muted); font-size: 11.5px; line-height: 1.55; }
+
+      /* ── Feature pills ── */
+      .feature-row {
         display: grid;
-        gap: 6px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
       }
 
-      .metric-value {
-        font-size: 22px;
+      .feature-pill {
+        display: grid;
+        gap: 3px;
+        padding: 11px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(8, 12, 20, 0.4);
       }
 
-      .metric-label {
-        margin: 4px 0 0;
-        color: var(--muted);
-        font-size: 12px;
+      /* ── Guide steps ── */
+      .guide-list { display: grid; gap: 8px; }
+
+      .guide-step {
+        display: grid;
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface-3);
       }
 
+      .guide-index {
+        display: grid;
+        width: 24px;
+        height: 24px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--blue-dim);
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      /* ── Badges ── */
       .badge {
         display: inline-flex;
         align-items: center;
-        min-height: 24px;
-        padding: 3px 8px;
+        min-height: 22px;
+        padding: 2px 8px;
         border-radius: 999px;
         background: var(--surface-2);
         color: var(--muted);
@@ -406,51 +303,27 @@
         white-space: nowrap;
       }
 
-      .badge.green {
-        background: rgba(74, 222, 128, 0.14);
-        color: var(--green);
-      }
+      .badge.green { background: var(--green-dim); color: var(--green); }
+      .badge.amber { background: var(--amber-dim); color: var(--amber); }
+      .badge.blue  { background: var(--blue-dim);  color: var(--blue); }
+      .badge.red   { background: rgba(251, 113, 133, 0.12); color: var(--red); }
 
-      .badge.amber {
-        background: rgba(251, 191, 36, 0.14);
-        color: var(--amber);
-      }
-
-      .badge.blue {
-        background: rgba(96, 165, 250, 0.14);
-        color: var(--blue);
-      }
-
-      .badge.red {
-        background: rgba(251, 113, 133, 0.14);
-        color: var(--red);
-      }
-
-      .progress {
-        display: grid;
-        gap: 10px;
-      }
+      /* ── Progress steps ── */
+      .progress { display: grid; gap: 8px; }
 
       .step {
         display: grid;
-        grid-template-columns: 32px minmax(0, 1fr) auto;
+        grid-template-columns: 30px minmax(0, 1fr) auto;
         gap: 10px;
         align-items: center;
-        padding: 9px;
+        padding: 10px 12px;
         border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border-radius: 8px;
         background: var(--surface-3);
       }
 
-      .step.done {
-        border-color: rgba(74, 222, 128, 0.34);
-        background: rgba(74, 222, 128, 0.08);
-      }
-
-      .step.active {
-        border-color: rgba(249, 115, 22, 0.42);
-        background: rgba(249, 115, 22, 0.1);
-      }
+      .step.done  { border-color: rgba(74, 222, 128, 0.2);  background: rgba(74, 222, 128, 0.05); }
+      .step.active { border-color: rgba(249, 115, 22, 0.3); background: rgba(249, 115, 22, 0.06); }
 
       .dot {
         display: grid;
@@ -460,73 +333,53 @@
         border-radius: 50%;
         background: var(--surface-2);
         color: var(--muted);
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
       }
 
-      .done .dot {
-        background: var(--green);
-        color: white;
-      }
+      .done .dot  { background: rgba(74, 222, 128, 0.2);  color: var(--green); }
+      .active .dot { background: var(--accent-dim); color: var(--accent); }
 
-      .active .dot {
-        background: var(--accent);
-        color: white;
-      }
+      .step-copy { margin: 2px 0 0; color: var(--muted); font-size: 11.5px; line-height: 1.5; }
 
-      .step-title {
-        margin: 0;
-        font-size: 13px;
-        font-weight: 650;
-      }
-
-      .step-copy {
-        margin: 2px 0 0;
-        color: var(--muted);
-        font-size: 11.5px;
-        line-height: 1.5;
-      }
-
-      .content-tabs {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
+      /* ── Content tabs ── */
+      .content-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
 
       .tab {
-        min-height: 34px;
-        padding: 7px 11px;
+        min-height: 32px;
+        padding: 6px 12px;
         border: 1px solid var(--line);
         border-radius: 6px;
         background: var(--surface-3);
         color: var(--muted);
         cursor: pointer;
+        font-size: 12.5px;
+        transition: background 100ms;
       }
 
       .tab.active {
         border-color: var(--line-strong);
-        background: var(--surface);
+        background: var(--surface-2);
         color: var(--text);
         font-weight: 700;
       }
 
       .preview {
-        min-height: 230px;
+        min-height: 200px;
         margin: 0;
         padding: 16px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: #0a1018;
+        background: rgba(6, 9, 15, 0.7);
         color: var(--text);
-        font-size: 14px;
-        line-height: 1.75;
+        font-size: 13.5px;
+        line-height: 1.8;
         white-space: pre-wrap;
+        font-family: inherit;
       }
 
-      .channel-card {
-        display: grid;
-        gap: 12px;
-      }
+      /* ── Channel cards ── */
+      .channel-card { display: grid; gap: 10px; }
 
       .channel-head {
         display: flex;
@@ -534,146 +387,108 @@
         gap: 12px;
       }
 
+      /* ── Toggle ── */
       .toggle {
         position: relative;
         display: inline-flex;
-        width: 42px;
-        height: 24px;
+        width: 40px;
+        height: 22px;
         padding: 2px;
         border-radius: 999px;
         background: var(--surface-2);
         cursor: pointer;
+        flex-shrink: 0;
       }
 
-      .toggle input {
-        position: absolute;
-        opacity: 0;
-      }
+      .toggle input { position: absolute; opacity: 0; }
 
       .toggle span {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         border-radius: 50%;
-        background: #dbe7f5;
-        box-shadow: 0 1px 5px rgba(20, 20, 20, 0.22);
-        transition: transform 160ms ease;
+        background: #c0cfe0;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        transition: transform 140ms ease;
       }
 
-      .toggle input:checked + span {
-        transform: translateX(18px);
-      }
+      .toggle input:checked + span { transform: translateX(18px); }
+      .toggle:has(input:checked) { background: rgba(74, 222, 128, 0.35); }
 
-      .toggle:has(input:checked) {
-        background: var(--accent-2);
-      }
-
-      .queue-list {
-        display: grid;
-        gap: 10px;
-      }
+      /* ── Queue ── */
+      .queue-list { display: grid; gap: 8px; }
 
       .queue-item {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
         gap: 10px;
         align-items: center;
-        padding: 10px;
+        padding: 11px 12px;
         border: 1px solid var(--line);
-        border-radius: var(--radius);
+        border-radius: 8px;
         background: var(--surface-3);
       }
 
-      .queue-title {
-        font-size: 14px;
-      }
+      .queue-title { font-size: 13px; }
 
-      .screen {
-        display: none;
-      }
+      /* ── Screens ── */
+      .screen { display: none; }
+      .screen.active { display: grid; gap: 16px; }
 
-      .screen.active {
-        display: grid;
-        gap: 16px;
-      }
-
-      .input,
-      textarea {
+      /* ── Form ── */
+      .input, textarea {
         width: 100%;
         border: 1px solid var(--line-strong);
-        border-radius: 6px;
-        background: var(--surface);
+        border-radius: 7px;
+        background: var(--surface-3);
         color: var(--text);
       }
 
-      .input {
-        height: 38px;
-        padding: 0 11px;
-      }
+      .input { height: 38px; padding: 0 12px; }
+      textarea { min-height: 110px; padding: 11px 12px; line-height: 1.6; resize: vertical; }
 
-      textarea {
-        min-height: 116px;
-        padding: 11px;
-        line-height: 1.6;
-        resize: vertical;
-      }
+      .form-grid { display: grid; gap: 12px; }
 
-      .form-grid {
-        display: grid;
-        gap: 12px;
-      }
+      label { display: grid; gap: 5px; }
 
-      label {
-        display: grid;
-        gap: 6px;
-      }
+      .label { color: var(--muted); font-size: 11.5px; font-weight: 700; }
 
-      .label {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .activity {
-        display: grid;
-        gap: 10px;
-      }
+      /* ── Activity ── */
+      .activity { display: grid; gap: 8px; }
 
       .activity-row {
         display: grid;
-        grid-template-columns: 88px minmax(0, 1fr);
+        grid-template-columns: 80px minmax(0, 1fr);
         gap: 10px;
         color: var(--muted);
-        font-size: 13px;
+        font-size: 12.5px;
         line-height: 1.55;
       }
 
+      /* ── Toast ── */
       .toast {
         position: fixed;
-        right: 24px;
-        bottom: 24px;
-        max-width: min(360px, calc(100vw - 48px));
-        padding: 12px 14px;
-        border: 1px solid var(--line);
+        right: 22px;
+        bottom: 22px;
+        max-width: min(340px, calc(100vw - 44px));
+        padding: 11px 14px;
+        border: 1px solid var(--line-strong);
         border-radius: var(--radius);
-        background: #edf4ff;
-        color: #111923;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        background: #e8effa;
+        color: #0d1520;
+        box-shadow: 0 16px 50px rgba(0,0,0,0.35);
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(8px);
         pointer-events: none;
-        transition: opacity 160ms ease, transform 160ms ease;
-        font-size: 14px;
+        transition: opacity 150ms ease, transform 150ms ease;
+        font-size: 13px;
+        font-weight: 600;
       }
 
-      .toast.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      .toast.show { opacity: 1; transform: translateY(0); }
 
-      @media (max-width: 980px) {
-        .app {
-          grid-template-columns: 1fr;
-        }
+      /* ── Mobile ── */
+      @media (max-width: 960px) {
+        .app { grid-template-columns: 1fr; }
 
         .sidebar {
           position: static;
@@ -682,49 +497,23 @@
           border-bottom: 1px solid var(--line);
         }
 
-        .nav {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
+        .nav { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .sidebar-note { display: none; }
 
-        .sidebar-note {
-          display: none;
-        }
+        .main { padding: 20px 16px 40px; }
 
-        .main {
-          padding: 22px 16px 40px;
-        }
-
-        .main::before {
-          inset: 0;
-        }
-
-        .topbar,
-        .overview-hero,
-        .work-grid,
-        .feature-row,
-        .three-grid,
-        .summary-grid {
+        .topbar, .overview-hero, .work-grid,
+        .feature-row, .three-grid, .summary-grid {
           grid-template-columns: 1fr;
         }
 
-        .topbar {
-          display: grid;
-        }
+        .topbar { display: grid; }
       }
 
-      @media (max-width: 620px) {
-        .nav {
-          grid-template-columns: 1fr 1fr;
-        }
-
-        h1 {
-          font-size: 24px;
-        }
-
-        .queue-item,
-        .step {
-          grid-template-columns: 1fr;
-        }
+      @media (max-width: 580px) {
+        .nav { grid-template-columns: 1fr 1fr; }
+        h1 { font-size: 19px; }
+        .queue-item, .step { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -768,9 +557,8 @@
 
         <div class="sidebar-note">
           <p class="card-title">Публичное демо</p>
-          <p class="small">
-            Кнопки кликаются, но ничего не публикуют. Здесь нет реальных ключей,
-            базы данных или доступа к каналам.
+          <p class="small" style="margin-top:5px">
+            Кнопки кликаются, но ничего не публикуют. Реальных ключей, базы данных и доступа к каналам здесь нет.
           </p>
         </div>
       </aside>
@@ -788,33 +576,33 @@
           </div>
           <div class="toolbar">
             <button class="button" id="resetDemo">Сбросить демо</button>
-            <button class="button primary" id="nextStep">Следующий этап</button>
+            <button class="button primary" id="nextStep">Следующий этап →</button>
           </div>
         </header>
 
+        <!-- Overview -->
         <section class="screen active" id="overview">
           <div class="overview-hero grid">
             <article class="card hero-card grid">
-              <div class="hero-copy">
+              <div class="hero-copy" style="display:grid;gap:10px">
                 <p class="eyebrow">Что перед вами</p>
                 <h2 class="hero-title">Рабочий пульт: от идеи до первых метрик</h2>
                 <p class="muted">
-                  Launch Engine держит весь запуск в одной карточке: продукт, каналы,
-                  материалы, проверки, публикации и итоговое решение.
+                  Launch Engine держит весь запуск в одной карточке — продукт, каналы, материалы, проверки, публикации и итоговое решение.
                 </p>
               </div>
               <div class="feature-row">
                 <div class="feature-pill">
                   <p class="card-title">Продукт</p>
-                  <p class="small">Brief, бренд и каналы.</p>
+                  <p class="small" style="margin-top:3px">Brief, бренд и каналы.</p>
                 </div>
                 <div class="feature-pill">
                   <p class="card-title">Контент</p>
-                  <p class="small">Тексты проходят ревью.</p>
+                  <p class="small" style="margin-top:3px">Тексты проходят ревью.</p>
                 </div>
                 <div class="feature-pill">
                   <p class="card-title">Результат</p>
-                  <p class="small">Метрики и решение.</p>
+                  <p class="small" style="margin-top:3px">Метрики и решение.</p>
                 </div>
               </div>
             </article>
@@ -828,22 +616,22 @@
                 <div class="guide-step">
                   <span class="guide-index">1</span>
                   <div>
-                    <p class="card-title">Нажмите “Следующий этап”</p>
-                    <p class="small">Увидите маршрут запуска.</p>
+                    <p class="card-title">Нажмите «Следующий этап»</p>
+                    <p class="small" style="margin-top:3px">Увидите маршрут запуска.</p>
                   </div>
                 </div>
                 <div class="guide-step">
                   <span class="guide-index">2</span>
                   <div>
-                    <p class="card-title">Откройте “Контент”</p>
-                    <p class="small">Посмотрите тексты по каналам.</p>
+                    <p class="card-title">Откройте «Контент»</p>
+                    <p class="small" style="margin-top:3px">Посмотрите тексты по каналам.</p>
                   </div>
                 </div>
                 <div class="guide-step">
                   <span class="guide-index">3</span>
                   <div>
-                    <p class="card-title">Зайдите в “Безопасность”</p>
-                    <p class="small">Проверьте, что ключей тут нет.</p>
+                    <p class="card-title">Зайдите в «Безопасность»</p>
+                    <p class="small" style="margin-top:3px">Проверьте, что ключей тут нет.</p>
                   </div>
                 </div>
               </div>
@@ -879,8 +667,7 @@
                 <p class="eyebrow">Маршрут запуска</p>
                 <h2 class="section-title">Пример: ULA Morta</h2>
                 <p class="muted">
-                  Каждый продукт движется по понятной цепочке: исследование, стратегия,
-                  проверка, контент, публикации и решение по результатам.
+                  Каждый продукт движется по цепочке: исследование, стратегия, проверка, контент, публикации, решение.
                 </p>
               </div>
               <div class="progress" id="progress"></div>
@@ -889,13 +676,14 @@
             <aside class="card grid">
               <div class="section-copy">
                 <p class="eyebrow">Очередь решений</p>
-                <h2 class="section-title">Что требует внимания человека</h2>
+                <h2 class="section-title">Что требует внимания</h2>
               </div>
               <div class="queue-list" id="queue"></div>
             </aside>
           </div>
         </section>
 
+        <!-- Product -->
         <section class="screen" id="product">
           <div class="work-grid grid">
             <article class="card grid">
@@ -903,8 +691,7 @@
                 <p class="eyebrow">Карточка продукта</p>
                 <h2 class="section-title">С чего начинается запуск</h2>
                 <p class="muted">
-                  Здесь фиксируется то, что нельзя потерять: что за продукт, кому он нужен,
-                  какую проблему решает и в каких каналах его проверять.
+                  Здесь фиксируется что за продукт, кому он нужен, какую проблему решает и в каких каналах его проверять.
                 </p>
               </div>
               <div class="form-grid">
@@ -933,26 +720,27 @@
           </div>
         </section>
 
+        <!-- Content -->
         <section class="screen" id="content">
           <article class="card grid">
             <div class="section-copy">
-                <p class="eyebrow">Проверка контента</p>
-                <h2 class="section-title">Материалы перед публикацией</h2>
-                <p class="muted">
-                Каждый канал получает свой формат текста. Человек видит материал,
-                принимает его или отправляет на переработку.
+              <p class="eyebrow">Проверка контента</p>
+              <h2 class="section-title">Материалы перед публикацией</h2>
+              <p class="muted">
+                Каждый канал получает свой формат текста. Человек видит материал, принимает его или отправляет на переработку.
               </p>
             </div>
             <div class="content-tabs" id="contentTabs"></div>
             <pre class="preview" id="contentPreview"></pre>
             <div class="actions">
-              <button class="button primary" id="approveContent">Принять выбранный текст</button>
+              <button class="button primary" id="approveContent">Принять текст</button>
               <button class="button" id="regenerateContent">Перегенерировать</button>
               <button class="button dark" id="scheduleContent">Поставить в расписание</button>
             </div>
           </article>
         </section>
 
+        <!-- Calendar -->
         <section class="screen" id="calendar">
           <article class="card grid">
             <div class="section-copy">
@@ -963,6 +751,7 @@
           </article>
         </section>
 
+        <!-- Metrics -->
         <section class="screen" id="metrics">
           <div class="summary-grid grid">
             <article class="card">
@@ -996,29 +785,28 @@
           </article>
         </section>
 
+        <!-- Security -->
         <section class="screen" id="settings">
           <article class="card grid">
             <div class="section-copy">
               <p class="eyebrow">Безопасность</p>
               <h2 class="section-title">Что не попадает в публичный интерфейс</h2>
               <p class="muted">
-                Это публичное демо не подключено к реальным сервисам. В рабочей версии
-                все секреты и интеграции находятся только на backend: база данных,
-                LLM-провайдеры, хранилище, cookies, токены каналов и доступ к браузерной автоматизации.
+                Это публичное демо не подключено к реальным сервисам. В рабочей версии все секреты находятся только на backend: база данных, LLM-провайдеры, хранилище, cookies, токены каналов.
               </p>
             </div>
             <div class="three-grid grid">
               <div class="panel">
                 <p class="card-title">Публичный интерфейс</p>
-                <p class="small">Показывает карточки, контент, календарь, ревью и метрики.</p>
+                <p class="small" style="margin-top:5px">Показывает карточки, контент, календарь, ревью и метрики.</p>
               </div>
               <div class="panel">
                 <p class="card-title">Серверная часть</p>
-                <p class="small">Хранит ключи, работает с БД, очередью, LLM и интеграциями.</p>
+                <p class="small" style="margin-top:5px">Хранит ключи, работает с БД, очередью, LLM и интеграциями.</p>
               </div>
               <div class="panel">
                 <p class="card-title">Этот демо-сайт</p>
-                <p class="small">Статическая страница на GitHub Pages без реальных данных и ключей.</p>
+                <p class="small" style="margin-top:5px">Статическая страница на GitHub Pages без реальных данных и ключей.</p>
               </div>
             </div>
           </article>
@@ -1030,13 +818,13 @@
 
     <script>
       const stages = [
-        ["Черновик", "описали продукт и выбрали каналы"],
+        ["Черновик",     "описали продукт и выбрали каналы"],
         ["Исследование", "собираем рынок, аудиторию и ограничения"],
-        ["Стратегия", "формируем позиционирование, оффер и углы подачи"],
-        ["Проверка", "человек принимает или возвращает стратегию"],
-        ["Контент", "готовим тексты под разные площадки"],
-        ["Публикация", "ставим материалы в очередь и расписание"],
-        ["Итог", "смотрим метрики и решаем, продолжать ли запуск"],
+        ["Стратегия",    "формируем позиционирование, оффер и углы подачи"],
+        ["Проверка",     "человек принимает или возвращает стратегию"],
+        ["Контент",      "готовим тексты под разные площадки"],
+        ["Публикация",   "ставим материалы в очередь и расписание"],
+        ["Итог",         "смотрим метрики и решаем, продолжать ли запуск"],
       ];
 
       const initialState = {
@@ -1045,18 +833,18 @@
         productName: "ULA Morta",
         approved: new Set(["VK"]),
         channels: [
-          ["VK", true, "готов к публикации"],
-          ["Telegram", true, "бот подключен"],
-          ["OK", true, "публикация через bridge"],
-          ["Dzen", false, "отложено до следующего этапа"],
+          ["VK",      true,  "готов к публикации"],
+          ["Telegram",true,  "бот подключен"],
+          ["OK",      true,  "публикация через bridge"],
+          ["Dzen",    false, "отложено до следующего этапа"],
         ],
       };
 
       const content = {
         VK:
-          "Запускаем ULA Morta в тестовом формате.\\n\\nКоротко рассказываем, для кого продукт, какую задачу закрывает и почему стоит перейти к подробному описанию.\\n\\nФормат: спокойный пост для VK с понятным CTA.",
+          "Запускаем ULA Morta в тестовом формате.\n\nКоротко рассказываем, для кого продукт, какую задачу закрывает и почему стоит перейти к подробному описанию.\n\nФормат: спокойный пост для VK с понятным CTA.",
         Telegram:
-          "ULA Morta выходит в тестовый запуск.\\n\\nЧто внутри:\\n- понятный сценарий использования\\n- короткий оффер\\n- один следующий шаг\\n\\nTelegram-формат: быстро объяснить суть и не перегружать человека деталями.",
+          "ULA Morta выходит в тестовый запуск.\n\nЧто внутри:\n— понятный сценарий использования\n— короткий оффер\n— один следующий шаг\n\nTelegram-формат: быстро объяснить суть и не перегружать деталями.",
         OK:
           "Новый продукт для аккуратного запуска: ULA Morta. Рассказываем простым языком, кому он подойдет, зачем нужен и что можно сделать следующим шагом.",
         Dzen:
@@ -1069,38 +857,35 @@
         channels: initialState.channels.map((item) => [...item]),
       };
 
-      const screens = document.querySelectorAll(".screen");
+      const screens    = document.querySelectorAll(".screen");
       const navButtons = document.querySelectorAll(".nav-button");
-      const toast = document.querySelector("#toast");
+      const toast      = document.querySelector("#toast");
 
       function showToast(message) {
         toast.textContent = message;
         toast.classList.add("show");
         window.clearTimeout(showToast.timeout);
-        showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2200);
+        showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2000);
       }
 
       function showScreen(name) {
-        screens.forEach((screen) => screen.classList.toggle("active", screen.id === name));
-        navButtons.forEach((button) =>
-          button.classList.toggle("active", button.dataset.screen === name),
-        );
+        screens.forEach((s) => s.classList.toggle("active", s.id === name));
+        navButtons.forEach((b) => b.classList.toggle("active", b.dataset.screen === name));
       }
 
       function renderProgress() {
-        const progress = document.querySelector("#progress");
-        progress.innerHTML = stages
-          .map(([title, copy], index) => {
-            const cls = index < state.stage ? "done" : index === state.stage ? "active" : "";
-            const status =
-              index < state.stage ? "готово" : index === state.stage ? "сейчас" : "ожидает";
+        document.querySelector("#progress").innerHTML = stages
+          .map(([title, copy], i) => {
+            const cls    = i < state.stage ? "done" : i === state.stage ? "active" : "";
+            const status = i < state.stage ? "готово" : i === state.stage ? "сейчас" : "ожидает";
+            const color  = i < state.stage ? "green" : i === state.stage ? "amber" : "";
             return `<div class="step ${cls}">
-              <div class="dot">${index < state.stage ? "✓" : index + 1}</div>
+              <div class="dot">${i < state.stage ? "✓" : i + 1}</div>
               <div>
                 <p class="step-title">${title}</p>
                 <p class="step-copy">${copy}</p>
               </div>
-              <span class="badge ${index < state.stage ? "green" : index === state.stage ? "amber" : ""}">${status}</span>
+              <span class="badge ${color}">${status}</span>
             </div>`;
           })
           .join("");
@@ -1108,73 +893,65 @@
 
       function renderQueue() {
         const items = [
-          ["Принять стратегию", state.stage >= 3 ? "Готово" : "Ждет", "amber"],
+          ["Принять стратегию",       state.stage >= 3 ? "Готово"    : "Ждет",    "amber"],
           ["Проверить Telegram-текст", state.approved.has("Telegram") ? "Принято" : "Ревью", "blue"],
-          ["Проверить OK-публикацию", state.stage >= 5 ? "В очереди" : "План", ""],
-          ["Подключить Dzen", "Позже", ""],
+          ["Проверить OK-публикацию",  state.stage >= 5 ? "В очереди" : "План",   ""],
+          ["Подключить Dzen",          "Позже",                                    ""],
         ];
         document.querySelector("#queue").innerHTML = items
-          .map(
-            ([title, status, color]) => `<div class="queue-item">
-              <div>
-                <p class="queue-title">${title}</p>
-                <p class="small">Это место, где человек подтверждает важные шаги.</p>
-              </div>
-              <span class="badge ${color}">${status}</span>
-            </div>`,
-          )
+          .map(([title, status, color]) => `<div class="queue-item">
+            <div>
+              <p class="queue-title">${title}</p>
+              <p class="small" style="margin-top:3px">Требует подтверждения от человека.</p>
+            </div>
+            <span class="badge ${color}">${status}</span>
+          </div>`)
           .join("");
       }
 
       function renderChannels() {
         document.querySelector("#channels").innerHTML = state.channels
-          .map(
-            ([name, enabled, status], index) => `<div class="panel channel-card">
-              <div class="channel-head">
-                <div>
-                  <p class="card-title">${name}</p>
-                  <p class="small">${status}</p>
-                </div>
-                <label class="toggle" aria-label="${name}">
-                  <input type="checkbox" data-channel-index="${index}" ${enabled ? "checked" : ""} />
-                  <span></span>
-                </label>
+          .map(([name, enabled, status], index) => `<div class="panel channel-card">
+            <div class="channel-head">
+              <div>
+                <p class="card-title">${name}</p>
+                <p class="small" style="margin-top:3px">${status}</p>
               </div>
-              <span class="badge ${enabled ? "green" : ""}">${enabled ? "включен" : "выключен"}</span>
-            </div>`,
-          )
+              <label class="toggle" aria-label="${name}">
+                <input type="checkbox" data-channel-index="${index}" ${enabled ? "checked" : ""} />
+                <span></span>
+              </label>
+            </div>
+            <span class="badge ${enabled ? "green" : ""}">${enabled ? "включен" : "выключен"}</span>
+          </div>`)
           .join("");
       }
 
       function renderContentTabs() {
         document.querySelector("#contentTabs").innerHTML = Object.keys(content)
-          .map(
-            (name) => `<button class="tab ${state.activeContent === name ? "active" : ""}" data-content="${name}">
-              ${name}${state.approved.has(name) ? " ✓" : ""}
-            </button>`,
-          )
+          .map((name) => `<button class="tab ${state.activeContent === name ? "active" : ""}" data-content="${name}">
+            ${name}${state.approved.has(name) ? " ✓" : ""}
+          </button>`)
           .join("");
         document.querySelector("#contentPreview").textContent = content[state.activeContent];
       }
 
       function renderCalendar() {
         const items = [
-          ["Сегодня", "Пост VK", "19:00", "green"],
-          ["Завтра", "Пост Telegram", "12:30", "blue"],
-          ["Пятница", "Публикация OK", "18:10", "amber"],
-          ["Суббота", "Статья в hub", "10:00", ""],
-          ["T+48h", "Решение по запуску", "авто", "green"],
-          ["Следующая неделя", "План итерации", "черновик", ""],
+          ["Сегодня",           "Пост VK",             "19:00",    "green"],
+          ["Завтра",            "Пост Telegram",        "12:30",    "blue"],
+          ["Пятница",           "Публикация OK",        "18:10",    "amber"],
+          ["Суббота",           "Статья в hub",         "10:00",    ""],
+          ["T+48h",             "Решение по запуску",   "авто",     "green"],
+          ["Следующая неделя",  "План итерации",        "черновик", ""],
         ];
         document.querySelector("#calendarGrid").innerHTML = items
-          .map(
-            ([day, title, time, color]) => `<div class="panel">
-              <p class="eyebrow">${day}</p>
-              <p class="card-title">${title}</p>
-              <p class="small">${time}</p>
-              <span class="badge ${color}">${color ? "запланировано" : "план"}</span>
-            </div>`,
-          )
+          .map(([day, title, time, color]) => `<div class="panel">
+            <p class="eyebrow">${day}</p>
+            <p class="card-title" style="margin-top:4px">${title}</p>
+            <p class="small" style="margin-top:3px">${time}</p>
+            <span class="badge ${color}" style="margin-top:8px;display:inline-flex">${color ? "запланировано" : "план"}</span>
+          </div>`)
           .join("");
       }
 
@@ -1186,21 +963,17 @@
           ["10:10", "Сбор метрик запланирован после публикации."],
         ];
         document.querySelector("#activity").innerHTML = rows
-          .map(
-            ([time, text]) => `<div class="activity-row">
-              <strong>${time}</strong>
-              <span>${text}</span>
-            </div>`,
-          )
+          .map(([time, text]) => `<div class="activity-row">
+            <strong>${time}</strong>
+            <span>${text}</span>
+          </div>`)
           .join("");
       }
 
       function renderCounters() {
-        document.querySelector("#readyCount").textContent = String(
-          Object.keys(content).length - state.approved.size,
-        );
+        document.querySelector("#readyCount").textContent    = String(Object.keys(content).length - state.approved.size);
         document.querySelector("#publishedCount").textContent = String(4 + state.stage);
-        document.querySelector("#errorCount").textContent = state.stage >= 6 ? "0" : "2";
+        document.querySelector("#errorCount").textContent    = state.stage >= 6 ? "0" : "2";
       }
 
       function renderAll() {
@@ -1213,30 +986,23 @@
         renderCounters();
       }
 
-      navButtons.forEach((button) => {
-        button.addEventListener("click", () => showScreen(button.dataset.screen));
+      navButtons.forEach((b) => b.addEventListener("click", () => showScreen(b.dataset.screen)));
+
+      document.addEventListener("click", (e) => {
+        const st = e.target.closest("[data-screen-target]");
+        if (st) showScreen(st.dataset.screenTarget);
+
+        const ct = e.target.closest("[data-content]");
+        if (ct) { state.activeContent = ct.dataset.content; renderContentTabs(); }
       });
 
-      document.addEventListener("click", (event) => {
-        const screenTarget = event.target.closest("[data-screen-target]");
-        if (screenTarget) {
-          showScreen(screenTarget.dataset.screenTarget);
-        }
-
-        const contentTarget = event.target.closest("[data-content]");
-        if (contentTarget) {
-          state.activeContent = contentTarget.dataset.content;
-          renderContentTabs();
-        }
-      });
-
-      document.addEventListener("change", (event) => {
-        const checkbox = event.target.closest("[data-channel-index]");
-        if (!checkbox) return;
-        const index = Number(checkbox.dataset.channelIndex);
-        state.channels[index][1] = checkbox.checked;
+      document.addEventListener("change", (e) => {
+        const cb = e.target.closest("[data-channel-index]");
+        if (!cb) return;
+        const i = Number(cb.dataset.channelIndex);
+        state.channels[i][1] = cb.checked;
         renderChannels();
-        showToast(`${state.channels[index][0]} ${checkbox.checked ? "включен" : "выключен"}`);
+        showToast(`${state.channels[i][0]} ${cb.checked ? "включен" : "выключен"}`);
       });
 
       document.querySelector("#nextStep").addEventListener("click", () => {
