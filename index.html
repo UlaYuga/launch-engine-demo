@@ -3,31 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Launch Engine V2 Demo</title>
+    <title>Launch Engine Demo</title>
     <meta
       name="description"
-      content="Кликабельное демо Launch Engine V2 без backend, ключей и внешних API."
+      content="Публичное кликабельное демо Launch Engine: темная панель запуска продуктов без backend, ключей и внешних API."
     />
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f4f1ea;
-        --surface: #fffdf9;
-        --surface-2: #ece8df;
-        --surface-3: #f8f6f1;
-        --text: #191814;
-        --muted: #67635b;
-        --soft: #918b80;
-        --line: rgba(25, 24, 20, 0.12);
-        --line-strong: rgba(25, 24, 20, 0.24);
-        --accent: #c75b12;
-        --accent-2: #0f766e;
-        --blue: #2563eb;
-        --green: #16803c;
-        --red: #b42318;
-        --amber: #b45309;
+        color-scheme: dark;
+        --bg: #070b11;
+        --sidebar: #0b1119;
+        --surface: #111923;
+        --surface-2: #172231;
+        --surface-3: #0d141d;
+        --surface-4: #1d2a3b;
+        --text: #edf4ff;
+        --muted: #a2afbf;
+        --soft: #6f7f91;
+        --line: rgba(237, 244, 255, 0.1);
+        --line-strong: rgba(237, 244, 255, 0.2);
+        --accent: #f97316;
+        --accent-2: #22c55e;
+        --blue: #60a5fa;
+        --green: #4ade80;
+        --red: #fb7185;
+        --amber: #fbbf24;
         --radius: 8px;
-        --shadow: 0 18px 50px rgba(43, 37, 27, 0.08);
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
       }
 
       * {
@@ -41,7 +43,9 @@
       body {
         margin: 0;
         min-height: 100vh;
-        background: var(--bg);
+        background:
+          linear-gradient(180deg, rgba(18, 28, 42, 0.92), rgba(7, 11, 17, 1) 360px),
+          var(--bg);
         color: var(--text);
         font-family:
           "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -73,7 +77,7 @@
         gap: 16px;
         padding: 18px 14px;
         border-right: 1px solid var(--line);
-        background: #f8f4ed;
+        background: var(--sidebar);
       }
 
       .brand {
@@ -90,8 +94,8 @@
         height: 34px;
         place-items: center;
         border-radius: 8px;
-        background: #fde7c7;
-        color: var(--accent);
+        background: rgba(249, 115, 22, 0.18);
+        color: #fed7aa;
         font-weight: 700;
       }
 
@@ -167,6 +171,38 @@
         padding: 28px 36px 48px;
       }
 
+      .intro-grid {
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      }
+
+      .guide-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .guide-step {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface-3);
+      }
+
+      .guide-index {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 50%;
+        background: rgba(96, 165, 250, 0.16);
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
       .topbar {
         display: flex;
         align-items: flex-start;
@@ -215,7 +251,7 @@
         min-height: 36px;
         padding: 8px 13px;
         border-radius: 6px;
-        background: var(--surface);
+        background: var(--surface-2);
         color: var(--text);
         border: 1px solid var(--line-strong);
         cursor: pointer;
@@ -234,9 +270,9 @@
       }
 
       .button.dark {
-        background: var(--text);
-        border-color: var(--text);
-        color: white;
+        background: #edf4ff;
+        border-color: #edf4ff;
+        color: #101722;
       }
 
       .button.ghost {
@@ -314,22 +350,22 @@
       }
 
       .badge.green {
-        background: #dff5e6;
+        background: rgba(74, 222, 128, 0.14);
         color: var(--green);
       }
 
       .badge.amber {
-        background: #fff0d3;
+        background: rgba(251, 191, 36, 0.14);
         color: var(--amber);
       }
 
       .badge.blue {
-        background: #e7efff;
+        background: rgba(96, 165, 250, 0.14);
         color: var(--blue);
       }
 
       .badge.red {
-        background: #ffe5e0;
+        background: rgba(251, 113, 133, 0.14);
         color: var(--red);
       }
 
@@ -350,13 +386,13 @@
       }
 
       .step.done {
-        border-color: rgba(22, 128, 60, 0.28);
-        background: #f2fbf5;
+        border-color: rgba(74, 222, 128, 0.34);
+        background: rgba(74, 222, 128, 0.08);
       }
 
       .step.active {
-        border-color: rgba(199, 91, 18, 0.34);
-        background: #fff6ea;
+        border-color: rgba(249, 115, 22, 0.42);
+        background: rgba(249, 115, 22, 0.1);
       }
 
       .dot {
@@ -423,7 +459,7 @@
         padding: 16px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: #fffdfa;
+        background: #0a1018;
         color: var(--text);
         font-size: 14px;
         line-height: 1.75;
@@ -461,7 +497,7 @@
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: white;
+        background: #dbe7f5;
         box-shadow: 0 1px 5px rgba(20, 20, 20, 0.22);
         transition: transform 160ms ease;
       }
@@ -562,8 +598,8 @@
         padding: 12px 14px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
-        background: var(--text);
-        color: white;
+        background: #edf4ff;
+        color: #111923;
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
         opacity: 0;
         transform: translateY(10px);
@@ -602,6 +638,7 @@
         }
 
         .topbar,
+        .intro-grid,
         .work-grid,
         .three-grid,
         .summary-grid {
@@ -636,42 +673,42 @@
           <div class="brand-mark">LE</div>
           <div>
             <p class="brand-title">Launch Engine</p>
-            <p class="brand-subtitle">Clickable V2 demo</p>
+            <p class="brand-subtitle">Демо для первого знакомства</p>
           </div>
         </div>
 
         <nav class="nav" aria-label="Demo navigation">
           <button class="nav-button active" data-screen="overview">
             <span class="nav-icon">⌁</span>
-            <span>Overview</span>
+            <span>Главная</span>
           </button>
           <button class="nav-button" data-screen="product">
             <span class="nav-icon">□</span>
-            <span>Product</span>
+            <span>Продукт</span>
           </button>
           <button class="nav-button" data-screen="content">
             <span class="nav-icon">✎</span>
-            <span>Content</span>
+            <span>Контент</span>
           </button>
           <button class="nav-button" data-screen="calendar">
             <span class="nav-icon">◷</span>
-            <span>Calendar</span>
+            <span>Календарь</span>
           </button>
           <button class="nav-button" data-screen="metrics">
             <span class="nav-icon">▥</span>
-            <span>Metrics</span>
+            <span>Метрики</span>
           </button>
           <button class="nav-button" data-screen="settings">
             <span class="nav-icon">⚙</span>
-            <span>Settings</span>
+            <span>Безопасность</span>
           </button>
         </nav>
 
         <div class="sidebar-note">
-          <p class="card-title">Безопасный режим</p>
+          <p class="card-title">Публичное демо</p>
           <p class="small">
-            Это статический демо-интерфейс. Здесь нет ключей, cookies, Anthropic API,
-            Replicate API, PostgreSQL или публикаций в реальные каналы.
+            Кнопки кликаются, но ничего не публикуют. Здесь нет токенов, cookies,
+            базы данных, Anthropic, Replicate или доступа к реальным каналам.
           </p>
         </div>
       </aside>
@@ -680,39 +717,97 @@
         <header class="topbar">
           <div class="topbar-copy">
             <div>
-              <p class="eyebrow">Demo workspace</p>
-              <h1>Панель запуска продуктов</h1>
+              <p class="eyebrow">Launch Engine Demo</p>
+              <h1>Система, которая помогает запускать продукты в несколько каналов</h1>
             </div>
             <p class="muted">
-              Люди могут пощелкать lifecycle, review queue, контент, календарь публикаций
-              и метрики. Все действия живут только в браузере.
+              Это кликабельный пример будущей рабочей панели: от идеи продукта до контента,
+              публикаций, сбора метрик и решения, продолжать ли запуск.
             </p>
           </div>
           <div class="toolbar">
-            <button class="button" id="resetDemo">Reset</button>
-            <button class="button primary" id="nextStep">Next stage</button>
+            <button class="button" id="resetDemo">Сбросить демо</button>
+            <button class="button primary" id="nextStep">Следующий этап</button>
           </div>
         </header>
 
         <section class="screen active" id="overview">
+          <div class="intro-grid grid">
+            <article class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Что перед вами</p>
+                <h2 class="section-title">Не лендинг, а рабочий пульт запуска</h2>
+                <p class="muted">
+                  Launch Engine собирает в одном месте продукт, каналы, тексты, ревью,
+                  расписание публикаций и результат после запуска. Идея простая:
+                  меньше ручной рутины, больше контроля перед тем, как что-то уйдет наружу.
+                </p>
+              </div>
+              <div class="three-grid grid">
+                <div class="panel">
+                  <p class="card-title">1. Заводим продукт</p>
+                  <p class="small">Название, brief, бренд и каналы, где продукт будут проверять.</p>
+                </div>
+                <div class="panel">
+                  <p class="card-title">2. Проверяем материалы</p>
+                  <p class="small">Стратегия и тексты не публикуются без ручного approval.</p>
+                </div>
+                <div class="panel">
+                  <p class="card-title">3. Смотрим результат</p>
+                  <p class="small">Метрики и решение: продолжать, менять подход или закрывать тест.</p>
+                </div>
+              </div>
+            </article>
+
+            <aside class="card grid">
+              <div class="section-copy">
+                <p class="eyebrow">Как смотреть демо</p>
+                <h2 class="section-title">Три минуты на знакомство</h2>
+              </div>
+              <div class="guide-list">
+                <div class="guide-step">
+                  <span class="guide-index">1</span>
+                  <div>
+                    <p class="card-title">Нажмите “Следующий этап”</p>
+                    <p class="small">Так видно, как продукт проходит путь от идеи до live.</p>
+                  </div>
+                </div>
+                <div class="guide-step">
+                  <span class="guide-index">2</span>
+                  <div>
+                    <p class="card-title">Откройте “Контент”</p>
+                    <p class="small">Там показаны тексты под разные площадки и ручная проверка.</p>
+                  </div>
+                </div>
+                <div class="guide-step">
+                  <span class="guide-index">3</span>
+                  <div>
+                    <p class="card-title">Зайдите в “Безопасность”</p>
+                    <p class="small">Там отдельно объяснено, где живут ключи в реальной версии.</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+
           <div class="summary-grid grid">
             <article class="card">
-              <p class="eyebrow">Products</p>
+              <p class="eyebrow">Продукты</p>
               <p class="metric-value" id="productCount">3</p>
-              <p class="metric-label">в демо-воркспейсе</p>
+              <p class="metric-label">тестовых карточки</p>
             </article>
             <article class="card">
-              <p class="eyebrow">Ready</p>
+              <p class="eyebrow">На проверке</p>
               <p class="metric-value" id="readyCount">1</p>
-              <p class="metric-label">контент ждет approval</p>
+              <p class="metric-label">материалы ждут решения</p>
             </article>
             <article class="card">
-              <p class="eyebrow">Published</p>
+              <p class="eyebrow">Публикации</p>
               <p class="metric-value" id="publishedCount">8</p>
               <p class="metric-label">постов за неделю</p>
             </article>
             <article class="card">
-              <p class="eyebrow">Errors</p>
+              <p class="eyebrow">Риски</p>
               <p class="metric-value" id="errorCount">2</p>
               <p class="metric-label">нужна ручная проверка</p>
             </article>
@@ -721,11 +816,11 @@
           <div class="work-grid grid">
             <article class="card grid">
               <div class="section-copy">
-                <p class="eyebrow">Lifecycle</p>
-                <h2 class="section-title">ULA Morta launch</h2>
+                <p class="eyebrow">Маршрут запуска</p>
+                <h2 class="section-title">Пример: ULA Morta</h2>
                 <p class="muted">
-                  Пример product-first flow: research, strategy, content, publications,
-                  метрики и decision в одной карточке.
+                  Каждый продукт движется по понятной цепочке: исследование, стратегия,
+                  проверка, контент, публикации и решение по результатам.
                 </p>
               </div>
               <div class="progress" id="progress"></div>
@@ -733,8 +828,8 @@
 
             <aside class="card grid">
               <div class="section-copy">
-                <p class="eyebrow">Review queue</p>
-                <h2 class="section-title">Операторские решения</h2>
+                <p class="eyebrow">Очередь решений</p>
+                <h2 class="section-title">Что требует внимания человека</h2>
               </div>
               <div class="queue-list" id="queue"></div>
             </aside>
@@ -745,33 +840,33 @@
           <div class="work-grid grid">
             <article class="card grid">
               <div class="section-copy">
-                <p class="eyebrow">Product brief</p>
-                <h2 class="section-title">Создание product-card</h2>
+                <p class="eyebrow">Карточка продукта</p>
+                <h2 class="section-title">С чего начинается запуск</h2>
                 <p class="muted">
-                  В реальном приложении это попадает в PostgreSQL и запускает pipeline через pg-boss.
-                  В демо форма обновляет карточку локально.
+                  Здесь фиксируется то, что нельзя потерять: что за продукт, кому он нужен,
+                  какую проблему решает и в каких каналах его проверять.
                 </p>
               </div>
               <div class="form-grid">
                 <label>
-                  <span class="label">Product name</span>
+                  <span class="label">Название продукта</span>
                   <input class="input" id="productName" value="ULA Morta" />
                 </label>
                 <label>
-                  <span class="label">Brief</span>
-                  <textarea id="productBrief">Позиционирование и контент для нового продукта: быстрый запуск, четыре канала, ручное approval перед публикацией.</textarea>
+                  <span class="label">Короткое описание</span>
+                  <textarea id="productBrief">Продукт для тестового запуска: быстро сформировать позиционирование, подготовить материалы под каналы и проверить реакцию аудитории без хаоса в таблицах и чатах.</textarea>
                 </label>
                 <div class="actions">
-                  <button class="button primary" id="saveBrief">Save brief</button>
-                  <button class="button" data-screen-target="content">Open content</button>
+                  <button class="button primary" id="saveBrief">Сохранить описание</button>
+                  <button class="button" data-screen-target="content">Открыть контент</button>
                 </div>
               </div>
             </article>
 
             <aside class="card grid">
               <div class="section-copy">
-                <p class="eyebrow">Channels</p>
-                <h2 class="section-title">План публикаций</h2>
+                <p class="eyebrow">Каналы</p>
+                <h2 class="section-title">Где проверяем гипотезу</h2>
               </div>
               <div class="grid" id="channels"></div>
             </aside>
@@ -781,18 +876,19 @@
         <section class="screen" id="content">
           <article class="card grid">
             <div class="section-copy">
-              <p class="eyebrow">Content review</p>
-              <h2 class="section-title">Generated artifacts</h2>
-              <p class="muted">
-                Переключай каналы, смотри текст, отправляй в approval или schedule.
+                <p class="eyebrow">Проверка контента</p>
+                <h2 class="section-title">Материалы перед публикацией</h2>
+                <p class="muted">
+                Каждый канал получает свой формат текста. Человек видит материал,
+                принимает его или отправляет на переработку.
               </p>
             </div>
             <div class="content-tabs" id="contentTabs"></div>
             <pre class="preview" id="contentPreview"></pre>
             <div class="actions">
-              <button class="button primary" id="approveContent">Approve selected</button>
-              <button class="button" id="regenerateContent">Regenerate</button>
-              <button class="button dark" id="scheduleContent">Schedule</button>
+              <button class="button primary" id="approveContent">Принять выбранный текст</button>
+              <button class="button" id="regenerateContent">Перегенерировать</button>
+              <button class="button dark" id="scheduleContent">Поставить в расписание</button>
             </div>
           </article>
         </section>
@@ -800,8 +896,8 @@
         <section class="screen" id="calendar">
           <article class="card grid">
             <div class="section-copy">
-              <p class="eyebrow">Publishing calendar</p>
-              <h2 class="section-title">Неделя публикаций</h2>
+              <p class="eyebrow">Календарь публикаций</p>
+              <h2 class="section-title">Что и когда должно выйти</h2>
             </div>
             <div class="three-grid grid" id="calendarGrid"></div>
           </article>
@@ -810,22 +906,22 @@
         <section class="screen" id="metrics">
           <div class="summary-grid grid">
             <article class="card">
-              <p class="eyebrow">Reach</p>
+              <p class="eyebrow">Охват</p>
               <p class="metric-value">42.8k</p>
               <p class="metric-label">суммарный охват</p>
             </article>
             <article class="card">
-              <p class="eyebrow">CTR</p>
+              <p class="eyebrow">Переходы</p>
               <p class="metric-value">3.7%</p>
               <p class="metric-label">по redirect links</p>
             </article>
             <article class="card">
-              <p class="eyebrow">Decision</p>
+              <p class="eyebrow">Решение</p>
               <p class="metric-value">Live</p>
               <p class="metric-label">после T+48h</p>
             </article>
             <article class="card">
-              <p class="eyebrow">Quality</p>
+              <p class="eyebrow">Качество</p>
               <p class="metric-value">91</p>
               <p class="metric-label">self-eval score</p>
             </article>
@@ -833,8 +929,8 @@
 
           <article class="card grid">
             <div class="section-copy">
-              <p class="eyebrow">Activity log</p>
-              <h2 class="section-title">Последние события</h2>
+              <p class="eyebrow">Журнал</p>
+              <h2 class="section-title">Что произошло в запуске</h2>
             </div>
             <div class="activity" id="activity"></div>
           </article>
@@ -843,26 +939,26 @@
         <section class="screen" id="settings">
           <article class="card grid">
             <div class="section-copy">
-              <p class="eyebrow">Runtime</p>
-              <h2 class="section-title">Что будет спрятано на backend</h2>
+              <p class="eyebrow">Безопасность</p>
+              <h2 class="section-title">Что не попадает в публичный интерфейс</h2>
               <p class="muted">
-                В настоящей версии секреты остаются только на сервере: DATABASE_URL,
-                ANTHROPIC_API_KEY, REPLICATE_API_TOKEN, S3 credentials, Dolphin access,
-                channel tokens и cookies.
+                Это публичное демо не подключено к реальным сервисам. В рабочей версии
+                все секреты и интеграции находятся только на backend: база данных,
+                LLM-провайдеры, хранилище, cookies, токены каналов и доступ к браузерной автоматизации.
               </p>
             </div>
             <div class="three-grid grid">
               <div class="panel">
-                <p class="card-title">Frontend</p>
-                <p class="small">Next.js UI, review screens, public hub, redirect links.</p>
+                <p class="card-title">Публичный интерфейс</p>
+                <p class="small">Показывает карточки, контент, календарь, ревью и метрики.</p>
               </div>
               <div class="panel">
-                <p class="card-title">Backend</p>
-                <p class="small">API routes, Drizzle, pg-boss, LLM router, integrations.</p>
+                <p class="card-title">Серверная часть</p>
+                <p class="small">Хранит ключи, работает с БД, очередью, LLM и интеграциями.</p>
               </div>
               <div class="panel">
-                <p class="card-title">Static demo</p>
-                <p class="small">GitHub Pages artifact без реальных данных и без ключей.</p>
+                <p class="card-title">Этот демо-сайт</p>
+                <p class="small">Статическая страница на GitHub Pages без реальных данных и ключей.</p>
               </div>
             </div>
           </article>
@@ -874,13 +970,13 @@
 
     <script>
       const stages = [
-        ["Draft", "brief заполнен, каналы выбраны"],
-        ["Research", "agent собирает рынок и ограничения"],
-        ["Strategy", "позиционирование и оффер"],
-        ["Approval", "оператор проверяет стратегию"],
-        ["Content", "посты и hub article готовы"],
-        ["Publishing", "pg-boss отправляет публикации"],
-        ["Live", "метрики и decision через T+48h"],
+        ["Черновик", "описали продукт и выбрали каналы"],
+        ["Исследование", "собираем рынок, аудиторию и ограничения"],
+        ["Стратегия", "формируем позиционирование, оффер и углы подачи"],
+        ["Проверка", "человек принимает или возвращает стратегию"],
+        ["Контент", "готовим тексты под разные площадки"],
+        ["Публикация", "ставим материалы в очередь и расписание"],
+        ["Итог", "смотрим метрики и решаем, продолжать ли запуск"],
       ];
 
       const initialState = {
@@ -889,22 +985,22 @@
         productName: "ULA Morta",
         approved: new Set(["VK"]),
         channels: [
-          ["VK", true, "API ready"],
-          ["Telegram", true, "Bot connected"],
-          ["OK", true, "Bridge mode"],
-          ["Dzen", false, "Deferred"],
+          ["VK", true, "готов к публикации"],
+          ["Telegram", true, "бот подключен"],
+          ["OK", true, "публикация через bridge"],
+          ["Dzen", false, "отложено до следующего этапа"],
         ],
       };
 
       const content = {
         VK:
-          "Запуск ULA Morta: короткая история продукта, четкий оффер и ссылка через redirect.\\n\\nФормат: пост для VK, без лишней воды, с CTA на hub article.",
+          "Запускаем ULA Morta в тестовом формате.\\n\\nКоротко рассказываем, для кого продукт, какую задачу закрывает и почему стоит перейти к подробному описанию.\\n\\nФормат: спокойный пост для VK с понятным CTA.",
         Telegram:
-          "ULA Morta выходит в тестовый запуск.\\n\\nЧто внутри:\\n- короткий product brief\\n- понятный use case\\n- один next step\\n\\nЕсли хочется быстро проверить гипотезу, это первый пост в цепочке.",
+          "ULA Morta выходит в тестовый запуск.\\n\\nЧто внутри:\\n- понятный сценарий использования\\n- короткий оффер\\n- один следующий шаг\\n\\nTelegram-формат: быстро объяснить суть и не перегружать человека деталями.",
         OK:
-          "Новый продукт для аккуратного запуска: ULA Morta. Рассказываем простым языком, зачем он нужен, кому подойдет и что делать дальше.",
+          "Новый продукт для аккуратного запуска: ULA Morta. Рассказываем простым языком, кому он подойдет, зачем нужен и что можно сделать следующим шагом.",
         Dzen:
-          "Большая статья для Dzen будет включена позже, когда канал перейдет из deferred в active.",
+          "Большая статья для Dzen будет включена позже, когда канал перейдет из отложенного режима в активный.",
       };
 
       const state = {
@@ -937,7 +1033,7 @@
           .map(([title, copy], index) => {
             const cls = index < state.stage ? "done" : index === state.stage ? "active" : "";
             const status =
-              index < state.stage ? "done" : index === state.stage ? "current" : "waiting";
+              index < state.stage ? "готово" : index === state.stage ? "сейчас" : "ожидает";
             return `<div class="step ${cls}">
               <div class="dot">${index < state.stage ? "✓" : index + 1}</div>
               <div>
@@ -952,17 +1048,17 @@
 
       function renderQueue() {
         const items = [
-          ["Strategy approval", state.stage >= 3 ? "Ready" : "Waiting", "amber"],
-          ["Telegram content", state.approved.has("Telegram") ? "Approved" : "Review", "blue"],
-          ["OK bridge smoke", state.stage >= 5 ? "Queued" : "Pending", ""],
-          ["Dzen unlock", "Deferred", ""],
+          ["Принять стратегию", state.stage >= 3 ? "Готово" : "Ждет", "amber"],
+          ["Проверить Telegram-текст", state.approved.has("Telegram") ? "Принято" : "Ревью", "blue"],
+          ["Проверить OK-публикацию", state.stage >= 5 ? "В очереди" : "План", ""],
+          ["Подключить Dzen", "Позже", ""],
         ];
         document.querySelector("#queue").innerHTML = items
           .map(
             ([title, status, color]) => `<div class="queue-item">
               <div>
                 <p class="queue-title">${title}</p>
-                <p class="small">Оператор может открыть задачу и принять решение.</p>
+                <p class="small">Это место, где человек подтверждает важные шаги.</p>
               </div>
               <span class="badge ${color}">${status}</span>
             </div>`,
@@ -984,7 +1080,7 @@
                   <span></span>
                 </label>
               </div>
-              <span class="badge ${enabled ? "green" : ""}">${enabled ? "enabled" : "off"}</span>
+              <span class="badge ${enabled ? "green" : ""}">${enabled ? "включен" : "выключен"}</span>
             </div>`,
           )
           .join("");
@@ -1003,12 +1099,12 @@
 
       function renderCalendar() {
         const items = [
-          ["Сегодня", "VK post", "19:00", "green"],
-          ["Завтра", "Telegram post", "12:30", "blue"],
-          ["Пятница", "OK bridge", "18:10", "amber"],
-          ["Суббота", "Hub article", "10:00", ""],
-          ["T+48h", "Decision run", "auto", "green"],
-          ["Next week", "Iteration plan", "draft", ""],
+          ["Сегодня", "Пост VK", "19:00", "green"],
+          ["Завтра", "Пост Telegram", "12:30", "blue"],
+          ["Пятница", "Публикация OK", "18:10", "amber"],
+          ["Суббота", "Статья в hub", "10:00", ""],
+          ["T+48h", "Решение по запуску", "авто", "green"],
+          ["Следующая неделя", "План итерации", "черновик", ""],
         ];
         document.querySelector("#calendarGrid").innerHTML = items
           .map(
@@ -1016,7 +1112,7 @@
               <p class="eyebrow">${day}</p>
               <p class="card-title">${title}</p>
               <p class="small">${time}</p>
-              <span class="badge ${color}">${color ? "scheduled" : "planned"}</span>
+              <span class="badge ${color}">${color ? "запланировано" : "план"}</span>
             </div>`,
           )
           .join("");
@@ -1024,10 +1120,10 @@
 
       function renderActivity() {
         const rows = [
-          ["09:40", "Strategy artifact approved by operator."],
-          ["09:44", "Telegram content generated with Haiku route."],
-          ["09:47", "VK publication queued through pg-boss."],
-          ["10:10", "Metrics aggregation scheduled for published posts."],
+          ["09:40", "Стратегия принята оператором."],
+          ["09:44", "Сгенерирован текст для Telegram."],
+          ["09:47", "Публикация VK поставлена в очередь."],
+          ["10:10", "Сбор метрик запланирован после публикации."],
         ];
         document.querySelector("#activity").innerHTML = rows
           .map(
@@ -1080,13 +1176,13 @@
         const index = Number(checkbox.dataset.channelIndex);
         state.channels[index][1] = checkbox.checked;
         renderChannels();
-        showToast(`${state.channels[index][0]} ${checkbox.checked ? "enabled" : "disabled"}`);
+        showToast(`${state.channels[index][0]} ${checkbox.checked ? "включен" : "выключен"}`);
       });
 
       document.querySelector("#nextStep").addEventListener("click", () => {
         state.stage = Math.min(stages.length - 1, state.stage + 1);
         renderAll();
-        showToast(`Stage: ${stages[state.stage][0]}`);
+        showToast(`Этап: ${stages[state.stage][0]}`);
       });
 
       document.querySelector("#resetDemo").addEventListener("click", () => {
@@ -1097,30 +1193,30 @@
         state.channels = initialState.channels.map((item) => [...item]);
         document.querySelector("#productName").value = state.productName;
         renderAll();
-        showToast("Demo reset");
+        showToast("Демо сброшено");
       });
 
       document.querySelector("#saveBrief").addEventListener("click", () => {
         state.productName = document.querySelector("#productName").value.trim() || "Untitled";
         document.querySelector("#productCount").textContent = "4";
-        showToast(`Saved: ${state.productName}`);
+        showToast(`Сохранено: ${state.productName}`);
       });
 
       document.querySelector("#approveContent").addEventListener("click", () => {
         state.approved.add(state.activeContent);
         renderAll();
-        showToast(`${state.activeContent} approved`);
+        showToast(`${state.activeContent}: текст принят`);
       });
 
       document.querySelector("#regenerateContent").addEventListener("click", () => {
-        showToast("Mock regeneration complete");
+        showToast("Текст обновлен в демо-режиме");
       });
 
       document.querySelector("#scheduleContent").addEventListener("click", () => {
         state.stage = Math.max(state.stage, 5);
         renderAll();
         showScreen("calendar");
-        showToast(`${state.activeContent} scheduled`);
+        showToast(`${state.activeContent}: добавлено в расписание`);
       });
 
       renderAll();
